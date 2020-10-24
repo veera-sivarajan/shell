@@ -1,20 +1,5 @@
- # include <stdio.h>
-
-void input_loop(void) {
-    char *line;
-    char **args;
-    int status;                 // get input and call necessary function to 
-                                // execute the command
-    do {
-        printf("> ");
-        line = read_line();
-        args = split_line(line);
-        status = execute(args);
-
-        free(line);
-        free(args);
-    } while (status);
-}
+# include <stdio.h>
+# include <stdlib.h>
 
 # define RL_BUFSIZE 1024
 
@@ -32,12 +17,12 @@ char *read_line(void) {
     while (1) {
         input_char = getchar();
 
-        if (c == EOF || c == '\n') {
+        if (input_char == EOF || input_char == '\n') {
             buffer[position] = '\0';
             return buffer;
         }
         else {
-            buffer[position] = c;
+            buffer[position] = input_char;
         }
         position += 1;
 
@@ -51,9 +36,35 @@ char *read_line(void) {
         }
     }
 }
-        
+
+// void input_loop(void) {
+//     char *line;
+//     char **args;
+//     int status;                 // get input and call necessary function to 
+//                                 // execute the command
+//     do {
+//         printf("> ");
+//         line = read_line();
+//         // args = split_line(line); 
+//         // status = execute(args);
+
+//         free(line);
+//         // free(args);
+//     } while (status);
+// }
+
+void temp_input_loop(void) {
+    char *line;
+    int count = 5;
+    while (count) {
+        printf("> ");
+        line = read_line();
+        free(line);
+        count -= 1;
+    }
+}
 
 int main(int argc, char **argv) {
-    input_loop();
+    temp_input_loop();
     return EXIT_SUCCESS;
 }
