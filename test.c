@@ -2,9 +2,6 @@
 # include <stdlib.h> 
 
 int main(void) {
-    int c = getchar();
-    if (c == '\n') {
-        printf("Next line\n");
-    }
+    printf("\a");
     return 0;
 }

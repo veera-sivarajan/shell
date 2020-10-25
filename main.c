@@ -1,7 +1,74 @@
 # include <stdio.h>
 # include <stdlib.h>
+# include <string.h>
 
 # define RL_BUFSIZE 1024
+# define TOK_BUFSIZE 64
+# define TOK_DELIM " \t\r\n\a"
+
+char **split_line(char *line) {
+    int bufsize= TOK_BUFSIZE;
+    int position = 0;
+    char **tokens = malloc(bufsize * sizeof(char *)); // sizeof(char *) == 8
+    char *token;
+
+    if (!tokens) {
+        fprintf(stderr, "split_line: tokens mallocation error\n");
+        exit(EXIT_FAILURE);
+    }
+
+    token = strtok(line, TOK_DELIM);
+
+    while (token != NULL) {
+        tokens[position] = token;
+        position += 1;
+
+        if (position >= bufsize) {
+            bufsize += TOK_BUFSIZE;
+            tokens = realloc(tokens, bufsize * sizeof(char *));
+            if (!tokens) {
+                fprintf(stderr, "split_line: reallocation error\n");
+                exit(EXIT_FAILURE);
+            }
+        }
+
+        token = strtok(NULL, TOK_DELIM);
+    }
+    tokens[position] = NULL;
+    return tokens;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 char *read_line(void) {
     int bufsize = RL_BUFSIZE;
@@ -21,6 +88,7 @@ char *read_line(void) {
             buffer[position] = '\0';
             return buffer;
         }
+
         else {
             buffer[position] = input_char;
         }
@@ -55,11 +123,19 @@ char *read_line(void) {
 
 void temp_input_loop(void) {
     char *line;
+    char **args;
     int count = 5;
     while (count) {
         printf("> ");
         line = read_line();
+        args = split_line(line);
+        char **temp = args;
+        while (*temp) {
+            printf("Token: %s\n", *temp);
+            temp += 1;
+        }
         free(line);
+        free(args);
         count -= 1;
     }
 }
