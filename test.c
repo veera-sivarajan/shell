@@ -1,7 +1,8 @@
 # include <stdio.h>
 # include <stdlib.h> 
+# include <errno.h>
+# include <unistd.h>
 
-int main(void) {
-    printf("\a");
-    return 0;
+int main(int argc, char **argv) {
+    chdir(argv[1]);
 }
