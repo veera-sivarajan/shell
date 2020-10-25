@@ -1,8 +1,10 @@
+# define _GNU_SOURCE 
 # include <stdio.h>
 # include <stdlib.h> 
 # include <errno.h>
 # include <unistd.h>
+# include <limits.h>
 
-int main(int argc, char **argv) {
-    chdir(argv[1]);
+int main() {
+    return 0;
 }

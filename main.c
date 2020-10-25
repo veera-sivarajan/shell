@@ -1,3 +1,5 @@
+# define _GNU_SOURCE
+# include <limits.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
@@ -9,6 +11,8 @@
 # define RL_BUFSIZE 1024
 # define TOK_BUFSIZE 64
 # define TOK_DELIM " \t\r\n\a"
+# define RESET "\x1B[0m"
+# define RED   "\x1B[31m"
 
 int start_process(char **args) {
     pid_t pid, wpid;
@@ -41,11 +45,70 @@ int start_process(char **args) {
     }
     return 1;
 }
+/*
+  Function declarations for builtin shell commnads:
+*/
 
-int execute(char **args) {
-    return start_process(args);
+int change_dir(char **args);
+int help_cmd(char **args);
+int exit_cmd(char **args);
+
+char *all_builtin[] = {
+    "cd",
+    "help",
+    "exit"
+};
+
+int (*builtin_func[]) (char **) = {
+    &change_dir,
+    &help_cmd,
+    &exit_cmd
+};
+
+int get_num_builtins() {
+    return sizeof(all_builtin) / sizeof(char *);
 }
 
+int change_dir(char **args) {
+    if (args[1] == NULL) {
+        fprintf(stderr, "chage_dir: not enough arguments\n");
+    }
+    else {
+        if (chdir(args[1]) != 0) {
+            perror("chdir error");
+        }
+    }
+    return 1;
+}
+
+int help_cmd(char **args) {
+    printf("List of built-in commands:\n");
+    for (int i = 0; i < get_num_builtins(); ++i) {
+        printf(" %s\n", all_builtin[i]);
+    }
+    printf("Use man command for information on other programs.\n");
+    return 1;
+}
+
+int exit_cmd(char **args) {
+    return 0;
+}
+
+int execute_command(char **args) {
+    if (args[0] == NULL) {
+        // Empty command was entered
+        return 1;
+    }
+
+    for (int i = 0; i < get_num_builtins(); ++i) {
+        if (strcmp(args[0], all_builtin[i]) == 0) {
+            return (*builtin_func[i]) (args);
+        }
+    }
+
+    return start_process(args);
+}
+           
 char **split_line(char *line) {
     int bufsize= TOK_BUFSIZE;
     int position = 0;
@@ -119,10 +182,10 @@ void input_loop(void) {
     int status;                 // get input and call necessary function to 
                                 // execute the command
     do {
-        printf("> ");
+        printf(RED "%s> " RESET, get_current_dir_name());
         line = read_line();
         args = split_line(line); 
-        status = execute(args);
+        status = execute_command(args);
 
         free(line);
         free(args);
