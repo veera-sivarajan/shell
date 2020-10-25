@@ -71,7 +71,10 @@ int get_num_builtins() {
 
 int change_dir(char **args) {
     if (args[1] == NULL) {
-        fprintf(stderr, "chage_dir: not enough arguments\n");
+        // fprintf(stderr, "chage_dir: not enough arguments\n");
+        if (chdir("/home/veera") != 0) {
+            perror("chdir to home error");
+        }
     }
     else {
         if (chdir(args[1]) != 0) {
