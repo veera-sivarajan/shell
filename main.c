@@ -56,7 +56,7 @@ int exit_cmd(char **args);
 char *all_builtin[] = {
     "cd",
     "help",
-    "exit"
+    "exit",
 };
 
 int (*builtin_func[]) (char **) = {
@@ -68,6 +68,11 @@ int (*builtin_func[]) (char **) = {
 int get_num_builtins() {
     return sizeof(all_builtin) / sizeof(char *);
 }
+
+// int lock_cmd(void) {
+//     char *p[] = {"loginctl", "lock-session", NULL};
+//     execvp(p[0], p);
+// }
 
 int change_dir(char **args) {
     if (args[1] == NULL) {
