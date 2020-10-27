@@ -1,4 +1,3 @@
-# define _GNU_SOURCE
 # include <limits.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -192,11 +191,13 @@ char *read_line(void) {
 
 void input_loop(void) {
     char *line;
+    char cwd[1024];
     char **args;
     int status;                 // get input and call necessary function to 
                                 // execute the command
     do {
-        printf(RED "%s> " RESET, get_current_dir_name());
+        getcwd(cwd, sizeof(cwd));
+        printf(RED "%s> " RESET, cwd);
         line = read_line();
         args = split_line(line); 
         status = execute_command(args);
