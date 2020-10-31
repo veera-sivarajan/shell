@@ -2,8 +2,11 @@
 # include "builtin.h"
 # include "hashtable.h"
 # include "aliases.h"
+# include "parse.h"
 
 int start_process(char **args) {
+    printf("Inside start_process()\n");
+    printf("RESULT: %s\n", args[0]);
     pid_t pid, wpid;
     int status;
 
@@ -46,9 +49,13 @@ int execute_command(char **args) {
             return (*builtin_func[i]) (args);
         }
         else if (strcmp(args[0], all_aliases[i]) == 0) {
-            return start_process(get_command(args[0]));
+            // char **temp = split_command(get_command(args[0]));
+            // printf("Executing: %s\n", temp[0]);
+            // return start_process(&temp[0]);
+            args = split_command(get_command(args[0]));
+            break;
         }
     }
-
+    printf("ARGS: %s\n", args[1]);
     return start_process(args);
 }

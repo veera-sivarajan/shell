@@ -28,19 +28,22 @@ void load_aliases() {
 }
 
 void insert_alias(char *alias, char *command) {
-    elem temp = {alias, command};
+    // printf("Entering insert_alias\n");
     unsigned long index = hash_function(alias);
     index %= NUM_ELE;
     while (table[index].command != NULL) {
         index++;
     }
-    table[index] = temp;
+    // printf("Inserting values...\n");
+    // printf("Exit insert_alias\n");
+    table[index].alias = alias;
+    table[index].command = command;
 }
 
 char *get_command(char *alias) {
     unsigned long index = hash_function(alias);
     index %= NUM_ELE;
-    return table[index].command;
+    return (table[index].command);
 }
 
 // int main () {

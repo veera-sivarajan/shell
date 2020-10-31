@@ -1,6 +1,7 @@
 # include "parse.h"
 # include "execute.h"
 # include "hashtable.h"
+# include "aliases.h"
 
 # define RESET "\x1B[0m"
 # define RED   "\x1B[31m"
