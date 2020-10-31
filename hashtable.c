@@ -4,8 +4,9 @@
 # define PR_TWO 76963 
 # define PR_THREE 86969 
 # define FIRST 37
-# define TABLE_BUFSIZE 100
+# define NUM_ELE 10 
 
+elem *table;
 
 unsigned long
 hash_function (char *word) {
@@ -17,28 +18,36 @@ hash_function (char *word) {
     return num % PR_THREE;
 }
 
-elem *load_aliases() {
-    elem *table = calloc(TABLE_BUFSIZE, sizeof(elem));
+void load_aliases() {
+    int num_aliases = NUM_ELE;
+    table = calloc(num_aliases, sizeof(elem));
     if (!table) {
         fprintf(stderr, "load_aliases: table mallocation error\n");
         exit(EXIT_FAILURE);
     }
 }
 
-void insert_alias(elem *table, char *alias, char *command) {
+void insert_alias(char *alias, char *command) {
+    elem temp = {alias, command};
     unsigned long index = hash_function(alias);
-    index %= 100;
-    table[index].command = command;
+    index %= NUM_ELE;
+    while (table[index].command != NULL) {
+        index++;
+    }
+    table[index] = temp;
 }
 
-char *get_command(elem *table, char *alias) {
+char *get_command(char *alias) {
     unsigned long index = hash_function(alias);
-    index %= 100;
+    index %= NUM_ELE;
     return table[index].command;
 }
 
-int main () {
-    insert_alias(table, "lock", "loginctl lock-session");
-    printf("Result: %s\n", get_command(table, "lock"));
-    return 0;
-}
+// int main () {
+//     load_aliases();
+//     insert_alias("lock", "login lock");
+//     insert_alias("bock", "login unlock");
+//     printf("Result: %s\n", get_command("lock"));
+//     printf("Result: %s\n", get_command("bock"));
+//     return 0;
+// }

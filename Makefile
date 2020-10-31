@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = -g -Wall -std=c99
-OBJECTS = builtin.c execute.c main.c parse.c #Source files
+OBJECTS = builtin.c execute.c main.c parse.c hashtable.c aliases.c #Source files
 NAME = myshell #Desired filename
 TODELETE = *.o # the *.o should be the same as the objects
 LIBS = *.h  #remove line if no external libraries needed

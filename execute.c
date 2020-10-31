@@ -1,5 +1,7 @@
 # include "execute.h"
 # include "builtin.h"
+# include "hashtable.h"
+# include "aliases.h"
 
 int start_process(char **args) {
     pid_t pid, wpid;
@@ -42,6 +44,9 @@ int execute_command(char **args) {
     for (int i = 0; i < get_num_builtins(); ++i) {
         if (strcmp(args[0], all_builtin[i]) == 0) {
             return (*builtin_func[i]) (args);
+        }
+        else if (strcmp(args[0], all_aliases[i]) == 0) {
+            return start_process(get_command(args[0]));
         }
     }
 

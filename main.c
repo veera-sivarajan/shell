@@ -1,5 +1,6 @@
 # include "parse.h"
 # include "execute.h"
+# include "hashtable.h"
 
 # define RESET "\x1B[0m"
 # define RED   "\x1B[31m"
@@ -24,6 +25,8 @@ void input_loop(void) {
 }
 
 int main(int argc, char **argv) {
+    load_aliases();
+    insert_alias("lock", "loginctl lock-session");
     input_loop();
     return EXIT_SUCCESS;
 }

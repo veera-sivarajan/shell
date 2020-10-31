@@ -11,28 +11,28 @@
 char *all_builtin[] = {
     "cd",
     "help",
-    "exit",
-    "lock",
+    "exit"
+    // "lock",
 };
 
 int (*builtin_func[]) (char **) = {
     &change_dir,
     &help_cmd,
-    &exit_cmd,
-    &lock_cmd,
+    &exit_cmd
+    // &lock_cmd,
 };
 
 int get_num_builtins() {
     return sizeof(all_builtin) / sizeof(char *);
 }
 
-int lock_cmd(char **args) {
-    char **temp = malloc(3 * sizeof(char *));
-    temp[0] = "loginctl";
-    temp[1] = "lock-session";
-    temp[2] = NULL;
-    start_process(temp);
-}
+// int lock_cmd(char **args) {
+//     char **temp = malloc(3 * sizeof(char *));
+//     temp[0] = "loginctl";
+//     temp[1] = "lock-session";
+//     temp[2] = NULL;
+//     start_process(temp);
+// }
 
 int change_dir(char **args) {
     if (args[1] == NULL) {
