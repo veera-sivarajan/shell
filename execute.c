@@ -39,7 +39,6 @@ int execute_command(char **args) {
         return 1;
     }
 
-    
     for (int i = 0; i < get_num_builtins(); ++i) {
         if (strcmp(args[0], all_builtin[i]) == 0) {
             return (*builtin_func[i]) (args);
