@@ -4,4 +4,8 @@
 
 extern char *all_aliases[]; 
 
-int split_command(char *command);
+char **split_command(char *command);
+
+int get_num_aliases();
+
+int is_alias(char *word);

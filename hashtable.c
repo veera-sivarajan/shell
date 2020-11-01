@@ -36,7 +36,9 @@ void insert_alias(char *alias, char *command) {
     }
     // printf("Inserting values...\n");
     // printf("Exit insert_alias\n");
+    table[index].alias = (char *) malloc(100);
     table[index].alias = alias;
+    table[index].command = (char *) malloc(100);
     table[index].command = command;
 }
 

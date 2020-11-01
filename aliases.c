@@ -8,15 +8,22 @@ char *all_aliases[] = {
     "books"
 };
 
-int split_command(char *variable) {
-    printf("Size: %ld\n", strlen(variable));
+char **split_command(char *variable) {
     char buf[strlen(variable)];
     strcpy(buf, variable);
-    for (int i = 0; buf[i] != '\0'; ++i) {
-        printf("%c ", buf[i]);
+    return split_line(buf);
+}
+
+int get_num_aliases() {
+    return sizeof(all_aliases) / sizeof(char *);
+}
+
+int is_alias(char *word) {
+    int size = get_num_aliases();
+    for (int i = 0; i < size; ++i) {
+        if (strcmp(word, all_aliases[i]) == 0) {
+            return 1;
+        }
     }
-    printf("\n");
-    char **value = split_line(buf);
-    start_process(value);
-    // return value;
+    return 0;
 }
