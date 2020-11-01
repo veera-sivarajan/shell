@@ -1,4 +1,5 @@
 # include "aliases.h"
+# include "execute.h"
 
 char *all_aliases[] = {
     "lock",
@@ -7,9 +8,15 @@ char *all_aliases[] = {
     "books"
 };
 
-char **split_command(char variable[100]) {
-    char **try = split_line(variable);
-    printf("Split_command: %s\n", try[0]);
-    printf("Split_command: %s\n", try[1]);
-    return try;
+int split_command(char *variable) {
+    printf("Size: %ld\n", strlen(variable));
+    char buf[strlen(variable)];
+    strcpy(buf, variable);
+    for (int i = 0; buf[i] != '\0'; ++i) {
+        printf("%c ", buf[i]);
+    }
+    printf("\n");
+    char **value = split_line(buf);
+    start_process(value);
+    // return value;
 }

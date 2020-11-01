@@ -4,4 +4,4 @@
 
 extern char *all_aliases[]; 
 
-char **split_command(char *command);
+int split_command(char *command);

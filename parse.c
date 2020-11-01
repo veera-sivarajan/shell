@@ -34,6 +34,11 @@ char **split_line(char *line) {
         token = strtok(NULL, TOK_DELIM);
     }
     tokens[position] = NULL;
+    char **temp = tokens;
+    while (*temp) {
+        printf("Word: %s\n", *temp);
+        ++temp;
+    }
     return tokens;
 }
 

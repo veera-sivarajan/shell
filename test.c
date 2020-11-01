@@ -5,7 +5,6 @@
 # include <unistd.h>
 # include <sys/wait.h>
 # include "hashtable.h"
-# include "aliases.h"
 
 # define TOK_DELIM " \t\r\n\a"
 
@@ -75,23 +74,24 @@ int start_process(char **args) {
     return 1;
 }
 
+char **split_command(char *variable) {
+    printf("Size: %s\n", strlen(variable));
+    char **try = split_line(variable);
+    printf("Split_command: %s\n", try[0]);
+    printf("Split_command: %s\n", try[1]);
+    return try;
+}
+
 int main () {
     load_aliases();
     insert_alias("lock", "loginctl lock-session");
-    char *result = get_command("lock");
-    char **args = split_command(result);
-    // start_process(args);
-    char *variable = get_command("lock");
-    char buf[strlen(variable)];
-    strcpy(buf, variable);
-    printf("Result: %s\n", args[1]);
-    char **try =  malloc(20 * sizeof(char *));
-    try = split_line(buf);
-    printf("Result: %s\n", args[0]);
-    // start_process(try);
-    // if (strcmp(args[0], try[0]) != 0) {
-    //     printf("STRING: %s\n", args[0]);
-    //     printf("STRING: %s\n", try[0]);
-    //     printf("WOWOWOWO\n");
-    // }
+    char *command = get_command("lock");
+    printf("Command: %c\n", command[0]);
+    int i;
+    for (i = 0; command[i] != '\0'; ++i) {
+        printf("%c ", command[i]);
+    }
+    printf("\n");
+    command[i] = '\0';
+    printf("Number: %c\n", command[i]);
 }

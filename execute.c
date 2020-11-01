@@ -53,10 +53,11 @@ int execute_command(char **args) {
             // printf("Executing: %s\n", temp[0]);
             // return start_process(&temp[0]);
             char *result = get_command(args[0]);
-            char buf[strlen(result)];
-            strcpy(buf, result);
+            // printf("Size: %li\n", strlen(result));
+            // char buf[strlen(result) + 1];
+            // strcpy(buf, result);
             // char **try = split_line(buf);
-            return start_process(split_command(buf)); 
+            return split_command(result);
             // return start_process(try);
         }
     }
