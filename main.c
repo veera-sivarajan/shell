@@ -28,6 +28,7 @@ void input_loop(void) {
 int main(int argc, char **argv) {
     load_aliases();
     insert_alias("lock", "loginctl lock-session");
+    insert_alias("books", "okular sujatha.pdf"); 
     input_loop();
     return EXIT_SUCCESS;
 }

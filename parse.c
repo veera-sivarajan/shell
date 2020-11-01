@@ -5,6 +5,7 @@
 # define TOK_DELIM " \t\r\n\a"
 
 char **split_line(char *line) {
+    printf("Line in split_line(): %s\n", line);
     int bufsize= TOK_BUFSIZE;
     int position = 0;
     char **tokens = malloc(bufsize * sizeof(char *)); // sizeof(char *) == 8

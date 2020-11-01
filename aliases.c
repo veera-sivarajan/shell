@@ -7,9 +7,9 @@ char *all_aliases[] = {
     "books"
 };
 
-char **split_command(char *command) {
-    char buff_array[strlen(command)];
-    strcpy(buff_array, command);
-    return split_line(buff_array);
+char **split_command(char variable[100]) {
+    char **try = split_line(variable);
+    printf("Split_command: %s\n", try[0]);
+    printf("Split_command: %s\n", try[1]);
+    return try;
 }
-

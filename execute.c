@@ -52,10 +52,13 @@ int execute_command(char **args) {
             // char **temp = split_command(get_command(args[0]));
             // printf("Executing: %s\n", temp[0]);
             // return start_process(&temp[0]);
-            args = split_command(get_command(args[0]));
-            break;
+            char *result = get_command(args[0]);
+            char buf[strlen(result)];
+            strcpy(buf, result);
+            // char **try = split_line(buf);
+            return start_process(split_command(buf)); 
+            // return start_process(try);
         }
     }
-    printf("ARGS: %s\n", args[1]);
     return start_process(args);
 }
