@@ -8,4 +8,7 @@ char **split_command(char *variable) {
 }
 
 int main () {
+  printf("Hello, world\n");
+  return 0;
+}
     
