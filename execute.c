@@ -7,17 +7,15 @@
 int start_process(char **args) {
     pid_t pid, wpid;
     int status;
-    printf(RED "INSIDE START PROCESS\n" RESET);
-    for (int i = 0; args[i] != NULL; ++i) {
-        printf("args[%i]: %s\n", i, args[i]);
-    }
-
+    
     pid = fork();
+    printf("ARGS[0]: %s\n", args[0]);
+    printf("ARGS[1]: %s\n", args[1]);
 
     if (pid == 0) {
         // Child process
-        char *filename = args[0]; // a.k.a program name
-        if (execvp(filename, args) == -1) {
+        // char *filename = args[0]; // a.k.a program name
+        if (execvp(args[0], args) == -1) {
             perror("start_process execvp error");
         }
         exit(EXIT_FAILURE);

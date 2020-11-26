@@ -2,6 +2,9 @@
 # include <string.h>
 
 int main () {
-    return 0;
+    char *string = "123456789";
+    char buf[5];
+    strncpy(buf, string, 5);
+    printf("BUF: %s\n", buf);
 }
     

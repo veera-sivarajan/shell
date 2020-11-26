@@ -25,6 +25,9 @@ void input_loop(void) {
                 printf("ARGS: %s\n", args[i]);
             }
             status = start_process(args);
+            // if (execvp(args[0], args) == -1) {
+            //     perror("start_process execvp error");
+            // }
             // printf("ALIAS COMMAND\n");
             // char *value = (char *) malloc(100);
             // value = get_command(args[0]);
