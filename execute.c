@@ -1,15 +1,16 @@
 # include "execute.h"
 # include "builtin.h"
-# include "hashtable.h"
-# include "aliases.h"
-# include "parse.h"
+
+# define RESET "\x1B[0m"
+# define RED   "\x1B[31m"
 
 int start_process(char **args) {
-    printf("Inside start_process()\n");
-    printf("RESULT: %s\n", args[0]);
-    printf("RESULT: %s\n", args[1]);
     pid_t pid, wpid;
     int status;
+    printf(RED "INSIDE START PROCESS\n" RESET);
+    for (int i = 0; i < 3; ++i) {
+        printf("args[%i]: %s\n", i, args[i]);
+    }
 
     pid = fork();
 
@@ -44,8 +45,10 @@ int execute_command(char **args) {
         // Empty command was entered
         return 1;
     }
-    printf("Value: %s\n", args[0]);
-    printf("Value: %s\n", args[1]);
+    printf(RED "INSIDE execute_command\n" RESET);
+    for (int i = 0; i < 3; ++i) {
+        printf("args[%i]: %s\n", i, args[i]);
+    }
 
     for (int i = 0; i < get_num_builtins(); ++i) {
         if (strcmp(args[0], all_builtin[i]) == 0) {

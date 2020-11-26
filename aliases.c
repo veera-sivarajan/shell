@@ -5,7 +5,8 @@ char *all_aliases[] = {
     "lock",
     "cl",
     "prj",
-    "books"
+    "books",
+    "boomba"
 };
 
 char **split_command(char *variable) {
@@ -26,4 +27,15 @@ int is_alias(char *word) {
         }
     }
     return 0;
+}
+
+int alias_handler (char *alias) {
+    int i, j;
+    char *command = (char *) malloc(100);
+    command = get_command(alias);
+    char buf[strlen(command) + 2];
+    strcpy(buf, command);
+    buf[strlen(command)] = '\n';
+    printf("Buf: %s", buf);
+    exit(0);
 }

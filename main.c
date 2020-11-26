@@ -1,6 +1,5 @@
 # include "parse.h"
 # include "execute.h"
-# include "hashtable.h"
 # include "aliases.h"
 # include <string.h>
 
@@ -16,19 +15,29 @@ void input_loop(void) {
                                 // execute the command
     do {
         getcwd(cwd, sizeof(cwd));
-        printf(RED "%s> " RESET, cwd);
+        printf("%s> ", cwd);
         line = read_line();
         args = split_line(line); 
         if (is_alias(args[0])) {
-            char *value = (char *) malloc(100);
-            value = get_command(args[0]);
-            char buf[strlen(value)];
-            strcpy(buf, value);
-            args = split_line(buf);
-            // execute_command(temp);
+            alias_handler(args[0]);
+            // printf("ALIAS COMMAND\n");
+            // char *value = (char *) malloc(100);
+            // value = get_command(args[0]);
+            // printf("VALUE: %s\n", value);
+            // char buf[strlen(value)];
+            // strcpy(buf, value);
+            // printf("BUFFER:\n");
+            // for (int i = 0; buf[i] != '\0'; ++i) {
+            //     printf("%c", buf[i]);
+            // }
+            // printf("\n");
+            // args = split_line(buf);
+            // printf(RED "INSIDE input_loop()\n" RESET);
+            // for (int i = 0; i < 3; ++i) {
+            //     printf("args[%i]: %s\n", i, args[i]);
+            // }
+            // // execute_command(temp);
         }
-        printf("ARGS: %s\n", args[0]);
-        printf("ARGS: %s\n", args[1]);
         status = execute_command(args);
         free(line);
         free(args);
@@ -37,6 +46,7 @@ void input_loop(void) {
 
 int main(int argc, char **argv) {
     load_aliases();
+    insert_alias("boomba", "echo lock"); 
     insert_alias("lock", "loginctl lock-session");
     insert_alias("books", "okular sujatha.pdf"); 
     input_loop();
