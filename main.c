@@ -17,9 +17,14 @@ void input_loop(void) {
         getcwd(cwd, sizeof(cwd));
         printf("%s> ", cwd);
         line = read_line();
-        args = split_line(line); 
-        if (is_alias(args[0])) {
-            alias_handler(args[0]);
+        printf("LINE: %s\n", line);
+        // args = split_line(line); 
+        if (is_alias(line)) {
+            args = alias_handler(line);
+            for (int i = 0; args[i] != NULL; ++i) {
+                printf("ARGS: %s\n", args[i]);
+            }
+            status = start_process(args);
             // printf("ALIAS COMMAND\n");
             // char *value = (char *) malloc(100);
             // value = get_command(args[0]);
@@ -38,7 +43,10 @@ void input_loop(void) {
             // }
             // // execute_command(temp);
         }
-        status = execute_command(args);
+        else {
+            args = split_line(line); 
+            status = execute_command(args);
+        }
         free(line);
         free(args);
     } while (status);

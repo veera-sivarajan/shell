@@ -8,7 +8,7 @@ int start_process(char **args) {
     pid_t pid, wpid;
     int status;
     printf(RED "INSIDE START PROCESS\n" RESET);
-    for (int i = 0; i < 3; ++i) {
+    for (int i = 0; args[i] != NULL; ++i) {
         printf("args[%i]: %s\n", i, args[i]);
     }
 
@@ -46,7 +46,7 @@ int execute_command(char **args) {
         return 1;
     }
     printf(RED "INSIDE execute_command\n" RESET);
-    for (int i = 0; i < 3; ++i) {
+    for (int i = 0;args[i] != NULL; ++i) {
         printf("args[%i]: %s\n", i, args[i]);
     }
 
