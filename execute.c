@@ -14,7 +14,7 @@ int start_process(char **args) {
     // }
     
     pid = fork();
-
+    
     if (pid == 0) {
         // Child process
         // char *filename = args[0]; // a.k.a program name
@@ -31,6 +31,10 @@ int start_process(char **args) {
         // Parent Process
         do {
             wpid = waitpid(pid, &status, WUNTRACED);
+            if (wpid == -1) {
+                perror("waitpid error");
+                exit(EXIT_FAILURE);
+            }
         } while (!WIFEXITED(status) && !WIFSIGNALED(status));
         // status is a pointer to the location where status information for
         // terminating process is stored
