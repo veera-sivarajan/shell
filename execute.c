@@ -8,9 +8,12 @@ int start_process(char **args) {
     pid_t pid, wpid;
     int status;
     
+    // printf("INSIDE START PROCESS\n");
+    // for (int i = 0; args[i] != NULL; ++i) {
+    //     printf("%s\n", args[i]);
+    // }
+    
     pid = fork();
-    printf("ARGS[0]: %s\n", args[0]);
-    printf("ARGS[1]: %s\n", args[1]);
 
     if (pid == 0) {
         // Child process
@@ -43,27 +46,15 @@ int execute_command(char **args) {
         // Empty command was entered
         return 1;
     }
-    printf(RED "INSIDE execute_command\n" RESET);
-    for (int i = 0;args[i] != NULL; ++i) {
-        printf("args[%i]: %s\n", i, args[i]);
-    }
+    // printf(RED "INSIDE execute_command\n" RESET);
+    // for (int i = 0;args[i] != NULL; ++i) {
+    //     printf("args[%i]: %s\n", i, args[i]);
+    // }
 
     for (int i = 0; i < get_num_builtins(); ++i) {
         if (strcmp(args[0], all_builtin[i]) == 0) {
             return (*builtin_func[i]) (args);
         }
-        // else if (strcmp(args[0], all_aliases[i]) == 0) {
-        //     // char **temp = split_command(get_command(args[0]));
-        //     // printf("Executing: %s\n", temp[0]);
-        //     // return start_process(&temp[0]);
-        //     char *result = get_command(args[0]);
-        //     // printf("Size: %li\n", strlen(result));
-        //     // char buf[strlen(result) + 1];
-        //     // strcpy(buf, result);
-        //     // char **try = split_line(buf);
-        //     return split_command(result);
-        //     // return start_process(try);
-        // }
     }
     return start_process(args);
 }

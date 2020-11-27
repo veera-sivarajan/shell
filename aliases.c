@@ -29,11 +29,11 @@ int is_alias(char *word) {
     return 0;
 }
 
-char **alias_handler (char *alias) {
+int alias_handler (char *alias) {
     int i, j;
-    char *command = (char *) malloc(100);
-    command = get_command(alias);
+    char *command = get_command(alias);
     char buf[strlen(command)];
     strcpy(buf, command);
-    return split_line(buf);
+    // return split_line(buf);
+    return execute_command(split_line(buf));
 }

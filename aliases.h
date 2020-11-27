@@ -11,4 +11,4 @@ int get_num_aliases();
 
 int is_alias(char *word);
 
-char **alias_handler (char *alias);
+int alias_handler (char *alias);

@@ -9,6 +9,9 @@ char **split_line(char *line) {
     int bufsize= TOK_BUFSIZE;
     int position = 0;
     char **tokens = malloc(bufsize * sizeof(char *)); // sizeof(char *) == 8
+    for (int i = 0; i < 2; ++i) {
+        tokens[i] = (char *) malloc(500);
+    }
     char *token;
 
     if (!tokens) {
