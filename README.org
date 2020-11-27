@@ -1,0 +1,12 @@
+* Shell
+A simple shell that can execute various Unix commands.
+** Limitations
+- No auto complete
+- No pipes
+- No redirection
+- No quoting
+- Limited number of builtins
+** Features
+- Commands can be aliased
+** Acknowledgement
+Stephan Brennan's [[https://brennan.io/2015/01/16/write-a-shell-in-c/][Tutorial]]
