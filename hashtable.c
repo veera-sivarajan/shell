@@ -36,13 +36,16 @@ void insert_alias(char *alias, char *command) {
     }
     // printf("Inserting values...\n");
     // printf("Exit insert_alias\n");
+    printf("Index of alias: %li\n", index);
     table[index].alias = (char *) malloc(100);
     table[index].alias = alias;
     table[index].command = (char *) malloc(100);
     table[index].command = command;
 }
 
-char *get_command(char *alias) {
+// FIXME: fetches value from incorrect index becuase
+//        index != actual index of command
+char *get_command(char *alias) {    
     unsigned long index = hash_function(alias);
     index %= NUM_ELE;
     return (table[index].command);

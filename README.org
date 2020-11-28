@@ -1,11 +1,12 @@
 * Shell
-A simple shell that can execute various Unix commands.
+A simple shell to execute commands.
 ** Limitations
 - No auto complete
 - No pipes
 - No redirection
 - No quoting
 - Limited number of builtins
+- No command history
 ** Features
 - Commands can be aliased
 ** Acknowledgement

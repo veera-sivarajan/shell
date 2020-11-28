@@ -1,12 +1,10 @@
 # include "aliases.h"
 # include "execute.h"
 
-char *all_aliases[] = {
-    "lock",
-    "cl",
-    "prj",
+char *all_aliases[] = {  // FIXME: alias names should be stored dynamically
+    "lock",                        
     "books",
-    "boomba"
+    "prj"
 };
 
 char **split_command(char *variable) {
@@ -31,6 +29,7 @@ int is_alias(char *word) {
 
 int alias_handler (char *alias) {
     char *command = get_command(alias);
+    printf("Executing: %s\n", command);
     char buf[strlen(command)];
     strcpy(buf, command);
     // return split_line(buf);

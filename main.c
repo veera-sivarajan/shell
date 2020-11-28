@@ -45,7 +45,8 @@ void input_loop(void) {
 
 int main(int argc, char **argv) {
     load_aliases();
-    insert_alias("boomba", "cd /home/veera/"); 
+    // insert_alias("cl", "cd /home/veera/Classes/Fall20/"); 
+    insert_alias("prj", "cd /home/veera");
     insert_alias("lock", "loginctl lock-session");
     insert_alias("books", "okular sujatha.pdf"); 
     input_loop();
