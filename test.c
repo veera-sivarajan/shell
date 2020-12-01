@@ -1,10 +1,9 @@
 # include <stdio.h>
-# include <string.h>
+# include <unistd.h>
+# include <stdlib.h>
 
-int main () {
-    char *string = "123456789";
-    char buf[5];
-    strncpy(buf, string, 5);
-    printf("BUF: %s\n", buf);
+void main () {
+    char *buf = (char *) malloc(1024);
+    int res = getlogin_r(buf, 100);
+    printf("%s\n", buf);
 }
-    

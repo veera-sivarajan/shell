@@ -2,6 +2,9 @@
 # include "execute.h"
 # include "aliases.h"
 # include <string.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+# include <unistd.h>
 
 # define RESET "\x1B[0m"
 # define RED   "\x1B[31m"
@@ -25,8 +28,10 @@ void input_loop(void) {
                                 // execute the command
     do {
         getcwd(cwd, sizeof(cwd));
-        printf("%s> ", cwd);
-        line = read_line();
+        // line = read_line();
+        // printf("%s", cwd);
+        strcat(cwd, RED "> " RESET);
+        line = readline(cwd);
         // printf("LINE: %s\n", line);
         // args = split_line(line); 
         if (is_alias(line)) {
@@ -44,6 +49,11 @@ void input_loop(void) {
 }
 
 int main(int argc, char **argv) {
+    char *uname = (char *) malloc(100);
+    int res = getlogin_r(uname, 100);     // FIXME: Use env variables to find user name 
+    if (!res) {
+        printf("Welcome to myshell, %s\n", uname);
+    }
     load_aliases();
     // insert_alias("cl", "cd /home/veera/Classes/Fall20/"); 
     insert_alias("prj", "cd /home/veera");

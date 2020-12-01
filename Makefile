@@ -5,7 +5,7 @@ NAME = myshell #Desired filename
 TODELETE = *.o # the *.o should be the same as the objects
 
 mt-collatz : $(OBJECTS)
-	$(CC) $(CFLAGS) $(OBJECTS) -o $(NAME) $(LIBS)
+	$(CC) $(CFLAGS) $(OBJECTS) -o $(NAME) $(LIBS) -lreadline
 
 .PHONY: clean run
 
