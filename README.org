@@ -7,6 +7,7 @@ A simple shell to execute commands.
 - No quoting
 - Limited number of builtins
 - No command history
+- Does not interpret regular expressions
 ** Features
 - Commands can be aliased
 ** Acknowledgement
