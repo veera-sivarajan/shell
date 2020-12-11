@@ -49,11 +49,7 @@ void input_loop(void) {
 }
 
 int main(int argc, char **argv) {
-    char *uname = (char *) malloc(100);
-    int res = getlogin_r(uname, 100);     // FIXME: Use env variables to find user name 
-    if (!res) {
-        printf("Welcome to myshell, %s\n", uname);
-    }
+    printf("Hello, %s\n", getenv("USER"));
     load_aliases();
     // insert_alias("cl", "cd /home/veera/Classes/Fall20/"); 
     insert_alias("prj", "cd /home/veera");
