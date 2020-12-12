@@ -9,6 +9,7 @@
 # define RESET "\x1B[0m"
 # define RED   "\x1B[31m"
 
+
 void input_loop (void) {
     char *line;
     char cwd[1024];
@@ -17,21 +18,19 @@ void input_loop (void) {
                                 // execute the command
     do {
         getcwd(cwd, sizeof(cwd));
-        // line = read_line();
-        // printf("%s", cwd);
         strcat(cwd, RED "> " RESET);
         line = readline(cwd);
-        // printf("LINE: %s\n", line);
-        // args = split_line(line); 
         if (is_alias(line)) {
-            // args = alias_handler(line);
-            // status = stupid_function(args[0], args[1]);
             status = alias_handler(line);
         }
         else {
             args = split_line(line); 
             status = execute_command(args);
-            free(args);
+            // for (int i = 0; args[i] != NULL; ++i) {
+            //     printf("args: %s\n", args[i]);
+            //     free(args[i]);
+            // }
+            // free(args);
         }
         free(line);
     } while (status);
