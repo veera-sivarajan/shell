@@ -7,6 +7,8 @@
 # define NUM_ELE 10 
 
 elem **table;
+int index_list[100];
+int count = 0;
 
 unsigned long
 hash_function (char *word) {
@@ -27,22 +29,6 @@ void load_aliases () {
     }
 }
 
-// void insert_alias (char *alias, char *command) {
-//     // printf("Entering insert_alias\n");
-//     unsigned long index = hash_function(alias);
-//     index %= NUM_ELE;
-//     while (table[index].command != NULL) {
-//         index++;
-//     }
-//     // printf("Inserting values...\n");
-//     // printf("Exit insert_alias\n");
-//     printf("Index of alias: %li\n", index);
-//     table[index].alias = (char *) malloc(100);
-//     table[index].alias = alias;
-//     table[index].command = (char *) malloc(100);
-//     table[index].command = command;
-// }
-
 elem *create_alias (char *alias, char *command) {
     elem *temp = (elem *) malloc(sizeof(elem));
     temp->alias = alias;
@@ -53,6 +39,7 @@ elem *create_alias (char *alias, char *command) {
         index++;
     }
     temp->index = index;
+    index_list[count++] = index;
     return temp;
 }
 
@@ -61,8 +48,6 @@ void insert_alias (char *alias, char *command) {
     table[temp->index] = temp;
 }
     
-// FIXME: fetches value from incorrect index becuase
-//        index != actual index of command
 char *get_command (char *alias) {    
     unsigned long address = hash_function(alias);
     address %= NUM_ELE;
@@ -72,7 +57,11 @@ char *get_command (char *alias) {
         }
         address++;
     }
-    
-    
 }
 
+void free_table (void) {
+    for (int i = 0; i < count; ++i) {
+        free(table[index_list[i]]);
+    }
+    free(table);
+}

@@ -18,4 +18,6 @@ void insert_alias (char *alias, char *command);
 
 char *get_command (char *alias);
 
+void free_table (void);
+
 
