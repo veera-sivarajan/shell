@@ -6,7 +6,7 @@
 # define FIRST 37
 # define NUM_ELE 10 
 
-elem *table;
+elem **table;
 
 unsigned long
 hash_function (char *word) {
@@ -18,7 +18,7 @@ hash_function (char *word) {
     return num % PR_THREE;
 }
 
-void load_aliases() {
+void load_aliases () {
     int num_aliases = NUM_ELE;
     table = calloc(num_aliases, sizeof(elem));
     if (!table) {
@@ -27,35 +27,52 @@ void load_aliases() {
     }
 }
 
-void insert_alias(char *alias, char *command) {
-    // printf("Entering insert_alias\n");
+// void insert_alias (char *alias, char *command) {
+//     // printf("Entering insert_alias\n");
+//     unsigned long index = hash_function(alias);
+//     index %= NUM_ELE;
+//     while (table[index].command != NULL) {
+//         index++;
+//     }
+//     // printf("Inserting values...\n");
+//     // printf("Exit insert_alias\n");
+//     printf("Index of alias: %li\n", index);
+//     table[index].alias = (char *) malloc(100);
+//     table[index].alias = alias;
+//     table[index].command = (char *) malloc(100);
+//     table[index].command = command;
+// }
+
+elem *create_alias (char *alias, char *command) {
+    elem *temp = (elem *) malloc(sizeof(elem));
+    temp->alias = alias;
+    temp->command = command;
     unsigned long index = hash_function(alias);
     index %= NUM_ELE;
-    while (table[index].command != NULL) {
+    while (table[index] != NULL) {
         index++;
     }
-    // printf("Inserting values...\n");
-    // printf("Exit insert_alias\n");
-    printf("Index of alias: %li\n", index);
-    table[index].alias = (char *) malloc(100);
-    table[index].alias = alias;
-    table[index].command = (char *) malloc(100);
-    table[index].command = command;
+    temp->index = index;
+    return temp;
 }
 
+void insert_alias (char *alias, char *command) {
+    elem *temp = create_alias(alias, command);
+    table[temp->index] = temp;
+}
+    
 // FIXME: fetches value from incorrect index becuase
 //        index != actual index of command
-char *get_command(char *alias) {    
-    unsigned long index = hash_function(alias);
-    index %= NUM_ELE;
-    return (table[index].command);
+char *get_command (char *alias) {    
+    unsigned long address = hash_function(alias);
+    address %= NUM_ELE;
+    while (1) {
+        if (strcmp(table[address]->alias, alias) == 0) {
+            return table[address]->command;
+        }
+        address++;
+    }
+    
+    
 }
 
-// int main () {
-//     load_aliases();
-//     insert_alias("lock", "login lock");
-//     insert_alias("bock", "login unlock");
-//     printf("Result: %s\n", get_command("lock"));
-//     printf("Result: %s\n", get_command("bock"));
-//     return 0;
-// }

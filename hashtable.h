@@ -1,17 +1,21 @@
 # include <stdio.h>
 # include <stdlib.h>
+# include <string.h>
 
-typedef struct element {
+typedef struct alias_struct { 
     char *alias;
     char *command;
+    int index;
 } elem;
 
 unsigned long hash_function (char *word);
 
-void load_aliases();
+void load_aliases ();
 
-void insert_alias(char *alias, char *command);
+elem *create_alias (char *alias, char *command);
 
-char *get_command(char *alias);
+void insert_alias (char *alias, char *command);
+
+char *get_command (char *alias);
 
 
