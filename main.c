@@ -39,6 +39,7 @@ void input_loop (void) {
 int main (int argc, char **argv) {
     printf("Hello, %s\n", getenv("USER"));
     load_aliases();
+    insert_alias("ls", "ls --color=auto");
     insert_alias("cl", "cd /home/veera");
     insert_alias("lock", "loginctl lock-session");
     insert_alias("books", "okular sujatha.pdf"); 

@@ -4,23 +4,12 @@
 # define TOK_BUFSIZE 64
 # define TOK_DELIM " \t\r\n\a\0"
 
-#define custom_malloc(X) my_malloc( X, __FILE__, __LINE__, __FUNCTION__)
-
-void* my_malloc (size_t size, const char *file, int line, const char *func) {
-    int i = 0; 
-    // printf("Inside function %i\n", i++);
-    void *p = malloc(size);
-    // printf ("Allocated = %s, %i, %s, %p[%li]\n", file, line, func, p, size);
-    /*Link List functionality goes in here*/
-    return p;
-}
-
 char **split_line (char *line) {
     int bufsize= TOK_BUFSIZE;
     int position = 0;
-    char **tokens = custom_malloc(bufsize * sizeof(char *)); // sizeof(char *) == 8
+    char **tokens = malloc(bufsize * sizeof(char *)); // sizeof(char *) == 8
     for (int i = 0; i < 2; ++i) {
-        tokens[i] = (char *) custom_malloc(500);
+        tokens[i] = (char *) malloc(500);
     }
     char *token;
 

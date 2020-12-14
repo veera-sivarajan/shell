@@ -8,11 +8,6 @@ int start_process(char **args) {
     pid_t pid, wpid;
     int status;
     
-    // printf("INSIDE START PROCESS\n");
-    // for (int i = 0; args[i] != NULL; ++i) {
-    //     printf("%s\n", args[i]);
-    // }
-    
     pid = fork();
     
     if (pid == 0) {
@@ -50,10 +45,6 @@ int execute_command(char **args) {
         // Empty command was entered
         return 1;
     }
-    // printf(RED "INSIDE execute_command\n" RESET);
-    // for (int i = 0;args[i] != NULL; ++i) {
-    //     printf("args[%i]: %s\n", i, args[i]);
-    // }
 
     for (int i = 0; i < get_num_builtins(); ++i) {
         if (strcmp(args[0], all_builtin[i]) == 0) {

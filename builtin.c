@@ -1,12 +1,9 @@
 # include "builtin.h"
 # include "execute.h"
 
-
-
 /*
   Function declarations for builtin shell commnads:
 */
-
 
 char *all_builtin[] = {
     "cd",
@@ -20,12 +17,9 @@ int (*builtin_func[]) (char **) = {
     &exit_cmd
 };
 
-
 int get_num_builtins() {
     return sizeof(all_builtin) / sizeof(char *);
 }
-
-// char prev_dir[1024] = {};
 
 int change_dir (char **args) {
     char prev_dir[1024];
@@ -36,7 +30,9 @@ int change_dir (char **args) {
         }
     }
     else if (*args[1] == '-') {
-        if (chdir(getenv("OLDPWD")) != 0) {
+        char *dir = getenv("OLDPWD");
+        printf("%s\n", dir);
+        if (chdir(dir) != 0) {
             perror("cd - error\n");
         }
     }

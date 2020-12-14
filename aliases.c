@@ -2,6 +2,7 @@
 # include "execute.h"
 
 char *all_aliases[] = {  // FIXME: alias names should be stored dynamically
+    "ls",
     "lock",                        
     "books",
     "prj"
