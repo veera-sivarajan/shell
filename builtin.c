@@ -20,18 +20,34 @@ int (*builtin_func[]) (char **) = {
     &exit_cmd
 };
 
+
 int get_num_builtins() {
     return sizeof(all_builtin) / sizeof(char *);
 }
 
+char prev_dir[1024] = {};
+
 int change_dir (char **args) {
     if (args[1] == NULL) {
-        // fprintf(stderr, "chage_dir: not enough arguments\n");
+        getcwd(prev_dir, sizeof(prev_dir));
         if (chdir("/home/veera") != 0) {
             perror("chdir to home error");
         }
     }
+    else if (*args[1] == '-') {
+        if (!prev_dir[0]) {
+            printf("prev_dir not set\n");
+            return 1;
+        }
+        char temp_dir[1024];
+        strcpy(temp_dir, prev_dir);
+        getcwd(prev_dir, sizeof(prev_dir));
+        if (chdir(temp_dir) != 0) {
+            perror("chdir error");
+        }
+    }
     else {
+        getcwd(prev_dir, sizeof(prev_dir));
         if (chdir(args[1]) != 0) {
             perror("chdir error");
         }
