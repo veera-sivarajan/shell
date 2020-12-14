@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -g -Wall -std=c99 
+CFLAGS = -g -Wall 
 OBJECTS = $(filter-out test.c, $(wildcard *.c)) #Source files
 NAME = myshell #Desired filename
 TODELETE = *.o # the *.o should be the same as the objects
