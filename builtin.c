@@ -31,7 +31,7 @@ int change_dir (char **args) {
     char prev_dir[1024];
     getcwd(prev_dir, sizeof(prev_dir));
     if (args[1] == NULL) {
-        if (chdir("/home/veera") != 0) {
+        if (chdir(getenv("HOME")) != 0) {
             perror("chdir to home error");
         }
     }
