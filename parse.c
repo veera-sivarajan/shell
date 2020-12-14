@@ -8,9 +8,9 @@
 
 void* my_malloc (size_t size, const char *file, int line, const char *func) {
     int i = 0; 
-    printf("Inside function %i\n", i++);
+    // printf("Inside function %i\n", i++);
     void *p = malloc(size);
-    printf ("Allocated = %s, %i, %s, %p[%li]\n", file, line, func, p, size);
+    // printf ("Allocated = %s, %i, %s, %p[%li]\n", file, line, func, p, size);
     /*Link List functionality goes in here*/
     return p;
 }
