@@ -38,7 +38,6 @@ int is_alias (char *word) {
 
 int alias_handler (char *alias) {
     char *command = get_command(alias);
-    printf("Command: %s\n", command);
     printf("Executing: %s\n", command);
     char buf[strlen(command)];
     strcpy(buf, command);
