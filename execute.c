@@ -4,7 +4,7 @@
 # define RESET "\x1B[0m"
 # define RED   "\x1B[31m"
 
-int start_process(char **args) {
+int start_process (char **args) {
     pid_t pid, wpid;
     int status;
     
@@ -40,7 +40,7 @@ int start_process(char **args) {
     return 1;
 }
 
-int execute_command(char **args) {
+int execute_command (char **args) {
     if (args[0] == NULL) {
         // Empty command was entered
         return 1;

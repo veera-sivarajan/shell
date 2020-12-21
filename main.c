@@ -26,11 +26,6 @@ void input_loop (void) {
         else {
             args = split_line(line); 
             status = execute_command(args);
-            // for (int i = 0; args[i] != NULL; ++i) {
-            //     printf("args: %s\n", args[i]);
-            //     free(args[i]);
-            // }
-            // free(args);
         }
         free(line);
     } while (status);
@@ -43,6 +38,7 @@ int main (int argc, char **argv) {
     insert_alias("cl", "cd /home/veera");
     insert_alias("lock", "loginctl lock-session");
     insert_alias("books", "okular sujatha.pdf"); 
+    insert_alias("edlab", "ssh vsivarajan@elnux.cs.umass.edu");
     input_loop();
     free_table();
     return EXIT_SUCCESS;

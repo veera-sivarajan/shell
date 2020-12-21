@@ -44,6 +44,7 @@ elem *create_alias (char *alias, char *command) {
 }
 
 void insert_alias (char *alias, char *command) {
+    alist_add(alias);
     elem *temp = create_alias(alias, command);
     table[temp->index] = temp;
 }
@@ -65,3 +66,4 @@ void free_table (void) {
     }
     free(table);
 }
+
