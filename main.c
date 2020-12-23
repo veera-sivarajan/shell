@@ -1,6 +1,6 @@
 # include "parse.h"
 # include "execute.h"
-# include "aliases.h"
+# include "builtin.h"
 # include <string.h>
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -23,6 +23,9 @@ void input_loop (elem **table) {
         add_history(line);
         if (is_alias(line)) {
             status = alias_handler(table, line);
+        }
+        else if (is_builtin(line)) {
+            status = builtin_handler(table, line);
         }
         else {
             args = split_line(line); 

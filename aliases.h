@@ -11,6 +11,8 @@ int get_num_aliases ();
 
 int is_alias (char *word);
 
+void print_aliases (elem **table);
+
 int alias_handler (elem **table, char *alias);
 
 void insert_alias (elem **table, char *alias, char *command);

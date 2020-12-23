@@ -53,7 +53,7 @@ char *get_ele (elem **table, char *alias) {
     address %= NUM_ELE;
     while (1) {
         if (strcmp(table[address]->alias, alias) == 0) {
-            printf("RETURNING %s\n", table[address]->command);
+            // printf("RETURNING %s\n", table[address]->command);
             return table[address]->command;
         }
         address++;

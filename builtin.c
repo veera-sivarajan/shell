@@ -8,7 +8,8 @@
 char *all_builtin[] = {
     "cd",
     "help",
-    "exit"
+    "exit",
+    "alias"
 };
 
 int (*builtin_func[]) (char **) = {
@@ -19,6 +20,34 @@ int (*builtin_func[]) (char **) = {
 
 int get_num_builtins() {
     return sizeof(all_builtin) / sizeof(char *);
+}
+
+int is_builtin (char *word) {
+    int size = get_num_builtins();
+    for (int i = 0; i < size; ++i) {
+        if (strcmp(word, all_builtin[i]) == 0) {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+int builtin_handler (elem **table, char *command) {
+    char buf[strlen(command)];
+    strcpy(buf, command);
+    char **args = split_line(buf); 
+    int result;
+    for (int i = 0; i < get_num_builtins(); ++i) {
+        if (strcmp(args[0], "alias") == 0) {
+            print_aliases(table);
+            result = 1;
+            break;
+        }
+        else if (strcmp(args[0], all_builtin[i]) == 0) {
+            return (*builtin_func[i]) (args);
+        }
+    }
+    return result;
 }
 
 int change_dir (char **args) {
