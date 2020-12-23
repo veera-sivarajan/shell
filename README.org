@@ -1,14 +1,13 @@
 * Shell
 A simple shell to execute commands.
 ** Limitations
-- No auto complete
 - No pipes
 - No redirection
 - No quoting
-- Limited number of builtins
-- No command history
 - Does not interpret regular expressions
 ** Features
 - Commands can be aliased
+- Auto complete
+- Command history
 ** Acknowledgement
 Stephan Brennan's [[https://brennan.io/2015/01/16/write-a-shell-in-c/][Tutorial]]
