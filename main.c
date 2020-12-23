@@ -10,7 +10,7 @@
 # define RED   "\x1B[31m"
 # define NUM_ELE 10 
 
-void input_loop (void) {
+void input_loop (elem **table) {
     char *line;
     char cwd[1024];
     char **args;
@@ -21,7 +21,7 @@ void input_loop (void) {
         strcat(cwd, RED "> " RESET);
         line = readline(cwd);
         if (is_alias(line)) {
-            status = alias_handler(line);
+            status = alias_handler(table, line);
         }
         else {
             args = split_line(line); 
@@ -40,7 +40,6 @@ int main (int argc, char **argv) {
     insert_alias(table, "lock", "loginctl lock-session");
     insert_alias(table, "books", "okular sujatha.pdf"); 
     insert_alias(table, "edlab", "ssh vsivarajan@elnux.cs.umass.edu");
-    input_loop();
-    free_table();
+    input_loop(table);
     return EXIT_SUCCESS;
 }

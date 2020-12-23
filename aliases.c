@@ -38,7 +38,7 @@ int is_alias (char *word) {
 }
 
 int alias_handler (elem **table, char *alias) {
-    char *command = get_command(alias);
+    char *command = get_command(table, alias);
     printf("Executing: %s\n", command);
     char buf[strlen(command)];
     strcpy(buf, command);

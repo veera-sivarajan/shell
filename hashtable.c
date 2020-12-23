@@ -4,6 +4,7 @@
 # define PR_TWO 76963 
 # define PR_THREE 86969 
 # define FIRST 37
+# define NUM_ELE 10 
 
 int index_list[100];
 int count = 0;
