@@ -18,8 +18,9 @@ void input_loop (elem **table) {
                                 // execute the command
     do {
         getcwd(cwd, sizeof(cwd));
-        strcat(cwd, RED "> " RESET);
+        strcat(cwd, "> ");
         line = readline(cwd);
+        add_history(line);
         if (is_alias(line)) {
             status = alias_handler(table, line);
         }
