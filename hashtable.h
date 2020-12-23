@@ -10,13 +10,13 @@ typedef struct alias_struct {
 
 unsigned long hash_function (char *word);
 
-void load_aliases ();
+void load_table ();
 
-elem *create_alias (char *alias, char *command);
+elem *create_ele (elem **table, char *alias, char *command);
 
-void insert_alias (char *alias, char *command);
+void insert_ele (elem **table, char *alias, char *command);
 
-char *get_command (char *alias);
+char *get_ele (elem **table, char *alias);
 
 void free_table (void);
 

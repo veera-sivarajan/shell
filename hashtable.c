@@ -4,9 +4,7 @@
 # define PR_TWO 76963 
 # define PR_THREE 86969 
 # define FIRST 37
-# define NUM_ELE 10 
 
-elem **table;
 int index_list[100];
 int count = 0;
 
@@ -20,16 +18,16 @@ hash_function (char *word) {
     return num % PR_THREE;
 }
 
-void load_aliases () {
-    int num_aliases = NUM_ELE;
-    table = calloc(num_aliases, sizeof(elem));
-    if (!table) {
-        fprintf(stderr, "load_aliases: table mallocation error\n");
-        exit(EXIT_FAILURE);
-    }
-}
+// void load_table () {
+//     int num_aliases = NUM_ELE;
+//     table = calloc(num_aliases, sizeof(elem));
+//     if (!table) {
+//         fprintf(stderr, "load_aliases: table mallocation error\n");
+//         exit(EXIT_FAILURE);
+//     }
+// }
 
-elem *create_alias (char *alias, char *command) {
+elem *create_ele (elem **table, char *alias, char *command) {
     elem *temp = (elem *) malloc(sizeof(elem));
     temp->alias = alias;
     temp->command = command;
@@ -43,13 +41,13 @@ elem *create_alias (char *alias, char *command) {
     return temp;
 }
 
-void insert_alias (char *alias, char *command) {
-    elem *temp = create_alias(alias, command);
+void insert_ele (elem **table, char *alias, char *command) {
+    elem *temp = create_ele(table, alias, command);
     printf("INSERTING %s\n", command);
     table[temp->index] = temp;
 }
     
-char *get_command (char *alias) {    
+char *get_ele (elem **table, char *alias) {    
     unsigned long address = hash_function(alias);
     address %= NUM_ELE;
     while (1) {
@@ -61,10 +59,10 @@ char *get_command (char *alias) {
     }
 }
 
-void free_table (void) {
-    for (int i = 0; i < count; ++i) {
-        free(table[index_list[i]]);
-    }
-    free(table);
-}
+// void free_table (void) {
+//     for (int i = 0; i < count; ++i) {
+//         free(table[index_list[i]]);
+//     }
+//     free(table);
+// }
 
