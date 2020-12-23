@@ -44,7 +44,6 @@ elem *create_alias (char *alias, char *command) {
 }
 
 void insert_alias (char *alias, char *command) {
-    alist_add(alias);
     elem *temp = create_alias(alias, command);
     printf("INSERTING %s\n", command);
     table[temp->index] = temp;

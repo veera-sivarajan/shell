@@ -1,6 +1,6 @@
 # include "parse.h"
 # include "execute.h"
-# include "hashtable.h"
+# include "aliases.h"
 # include <string.h>
 # include <readline/readline.h>
 # include <readline/history.h>

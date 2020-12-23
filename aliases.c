@@ -1,19 +1,14 @@
 # include "aliases.h"
 # include "execute.h"
 
-// char *all_aliases[] = {  // FIXME: alias names should be stored dynamically
-//     "edlab",
-//     "ls",
-//     "lock",                        
-//     "books",
-//     "prj"
-// };
+char *all_aliases[] = {  // FIXME: alias names should be stored dynamically
+    "edlab",
+    "ls",
+    "lock",                        
+    "books",
+    "prj"
+};
 
-node *alist = NULL;
-
-void alist_add (char *word) {
-    list_add(&alist, word);
-}
 
 char **split_command (char *variable) {
     char buf[strlen(variable)];
@@ -26,12 +21,11 @@ int get_num_aliases () {
 }
 
 int is_alias (char *word) {
-    node *temp = alist;
-    while (temp != NULL) {
-        if (strcmp(word, temp->word) == 0) {
+    int size = get_num_aliases();
+    for (int i = 0; i < size; ++i) {
+        if (strcmp(word, all_aliases[i]) == 0) {
             return 1;
         }
-        temp = temp->next;
     }
     return 0;
 }

@@ -1,7 +1,6 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
-# include "aliases.h"
 
 typedef struct alias_struct { 
     char *alias;

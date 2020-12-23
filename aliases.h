@@ -1,11 +1,9 @@
 # include <stdio.h>
 # include <string.h>
 # include "parse.h"
-# include "linkedlist.h"
+# include "hashtable.h"
 
 extern char *all_aliases[]; 
-
-void alist_add (char *word);
 
 char **split_command(char *command);
 
