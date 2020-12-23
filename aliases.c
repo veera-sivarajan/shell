@@ -24,7 +24,7 @@ char **split_command (char *variable) {
 }
 
 int get_num_aliases () {
-    return 5;
+    return num_aliases;
 }
 
 int is_alias (char *word) {
