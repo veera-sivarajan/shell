@@ -21,14 +21,15 @@ void input_loop (elem **table) {
         strcat(cwd, "> ");
         line = readline(cwd);
         add_history(line);
+        printf("Line: %s\n", line);
+        args = split_line(line);
         if (is_alias(line)) {
             status = alias_handler(table, line);
         }
-        else if (is_builtin(line)) {
-            status = builtin_handler(table, line);
+        else if (is_builtin(args)) {
+            status = builtin_handler(table, args);
         }
         else {
-            args = split_line(line); 
             status = execute_command(args);
         }
         free(line);

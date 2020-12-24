@@ -22,26 +22,39 @@ int get_num_builtins() {
     return sizeof(all_builtin) / sizeof(char *);
 }
 
-int is_builtin (char *word) {
+int is_builtin (char **words) {
     int size = get_num_builtins();
     for (int i = 0; i < size; ++i) {
-        if (strcmp(word, all_builtin[i]) == 0) {
+        if (strcmp(words[0], all_builtin[i]) == 0) {
             return 1;
         }
     }
     return 0;
 }
 
-int builtin_handler (elem **table, char *command) {
-    char buf[strlen(command)];
-    strcpy(buf, command);
-    char **args = split_line(buf); 
+int builtin_handler (elem **table, char **args) {
+    // char buf[strlen(command)];
+    // strcpy(buf, command);
+    // for (int i = 0; i < 3; ++i) {
+    //     printf("%s\n", args[i]);
+    // }
     int result;
-    for (int i = 0; i < get_num_builtins(); ++i) {
+    int num_builtins = get_num_builtins() - 1;
+    for (int i = 0; i < num_builtins; ++i) {
         if (strcmp(args[0], "alias") == 0) {
-            print_aliases(table);
-            result = 1;
-            break;
+            printf("%s\n", args[0]);
+            if (args[1] && args[2]) {
+                printf("ADDING ALIAS\n");
+                printf("%s -- %s\n", args[1], args[2]);
+                insert_alias(table, args[1], args[2]);
+                result = 1;
+                break;
+            }
+            else {
+                print_aliases(table); // list all aliases
+                result = 1;
+                break;
+            }
         }
         else if (strcmp(args[0], all_builtin[i]) == 0) {
             return (*builtin_func[i]) (args);

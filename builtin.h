@@ -13,9 +13,9 @@ int get_num_builtins();
 
 int alias_cmd (char **args);
 
-int is_builtin (char *word);
+int is_builtin (char **word);
 
-int builtin_handler (elem **table, char *command);
+int builtin_handler (elem **table, char **command);
 
 int change_dir (char **args);
 

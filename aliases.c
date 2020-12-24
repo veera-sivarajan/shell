@@ -40,13 +40,12 @@ int is_alias (char *word) {
 void print_aliases (elem **table) {
     int size = get_num_aliases();
     for (int i = 0; i < size; ++i) {
-        printf("%s \"%s\"\n", all_aliases[i], get_command(table, all_aliases[i]));
+        printf("%s = \"%s\"\n", all_aliases[i], get_command(table, all_aliases[i]));
     }
 }
 
 int alias_handler (elem **table, char *alias) {
     char *command = get_command(table, alias);
-    printf("Executing: %s\n", command);
     char buf[strlen(command)];
     strcpy(buf, command);
     // return split_line(buf);
