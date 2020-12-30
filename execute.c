@@ -45,7 +45,7 @@ int start_process (char **args) {
 }
 
 int execute_command (char **args) {
-    if (args[0] == NULL) {
+    if (args == NULL) {
         // Empty command was entered
         return 1;
     }

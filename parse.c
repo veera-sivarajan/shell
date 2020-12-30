@@ -5,6 +5,9 @@
 # define TOK_DELIM " \t\r\n\a\0"
 
 char **split_line (char *line) {
+    if (strlen(line) == 0) {
+        return NULL;
+    }
     int bufsize= TOK_BUFSIZE;
     int position = 0;
     char **tokens = malloc(bufsize * sizeof(char *)); // sizeof(char *) == 8
@@ -19,6 +22,7 @@ char **split_line (char *line) {
     }
 
     token = strtok(line, TOK_DELIM);
+    printf("Token: %s\n", token);
 
     while (token != NULL) {
         tokens[position] = token;

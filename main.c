@@ -18,12 +18,12 @@ void input_loop (elem **table) {
                                 // execute the command
     do {
         getcwd(cwd, sizeof(cwd));
-        strcat(cwd, "> ");
+        strcat(cwd, "$ ");
         line = readline(cwd);
         add_history(line);
-        printf("Line: %s\n", line);
         args = split_line(line);
         if (is_alias(line)) {
+            printf("EXECUTING ALIAS\n");
             status = alias_handler(table, line);
         }
         else if (is_builtin(args)) {
@@ -33,6 +33,7 @@ void input_loop (elem **table) {
             status = execute_command(args);
         }
         free(line);
+        free(args);
     } while (status);
 }
 
@@ -40,11 +41,12 @@ int main (int argc, char **argv) {
     printf("Hello, %s\n", getenv("USER"));
     // load_table();
     elem **table = calloc(NUM_ELE, sizeof(elem));
-    insert_alias(table, "ls", "ls --color=auto");
     insert_alias(table, "cl", "cd /home/veera");
     insert_alias(table, "lock", "loginctl lock-session");
     insert_alias(table, "books", "okular sujatha.pdf"); 
     insert_alias(table, "edlab", "ssh vsivarajan@elnux.cs.umass.edu");
+    char *hello[2] = { "ls", "ls --color=auto" };
+    insert_alias(table, hello[0], hello[1]);
     input_loop(table);
     return EXIT_SUCCESS;
 }
