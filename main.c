@@ -7,18 +7,21 @@
 # include <unistd.h>
 
 # define RESET "\x1B[0m"
-# define RED   "\x1B[31m"
+# define BLUE "\e[1;34m"
 # define NUM_ELE 10 
+# define SIZE 1024
 
 void input_loop (elem **table) {
     char *line;
-    char cwd[1024];
+    char cwd[SIZE];
+    char cmd[SIZE];
+    char reset[SIZE];
     char **args;
     int status;                 // get input and call necessary function to 
                                 // execute the command
     do {
-        char cmd[1024] = "\e[1;34m";
-        char reset[1024] = "\x1B[0m";
+        strcpy(cmd, BLUE);
+        strcpy(reset, RESET);
         getcwd(cwd, sizeof(cwd));
         strcat(cmd, cwd);
         strcat(cmd, reset);
@@ -47,8 +50,9 @@ int main (int argc, char **argv) {
     insert_alias(table, "lock", "loginctl lock-session");
     insert_alias(table, "books", "okular sujatha.pdf"); 
     insert_alias(table, "edlab", "ssh vsivarajan@elnux.cs.umass.edu");
-    char *hello[2] = { "ls", "ls --color=auto" };
-    insert_alias(table, hello[0], hello[1]);
     input_loop(table);
+    for (int i = 0; table[i]; ++i) {
+        printf("%s\n", table[i]->alias);
+    }
     return EXIT_SUCCESS;
 }

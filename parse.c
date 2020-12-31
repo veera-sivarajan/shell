@@ -11,9 +11,6 @@ char **split_line (char *line) {
     int bufsize= TOK_BUFSIZE;
     int position = 0;
     char **tokens = malloc(bufsize * sizeof(char *)); // sizeof(char *) == 8
-    for (int i = 0; i < 2; ++i) {
-        tokens[i] = (char *) malloc(500);
-    }
     char *token;
 
     if (!tokens) {
@@ -38,6 +35,7 @@ char **split_line (char *line) {
 
         token = strtok(NULL, TOK_DELIM);
     }
+    free(token);
     tokens[position] = NULL;
     return tokens;
 }

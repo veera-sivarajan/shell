@@ -63,7 +63,7 @@ int builtin_handler (elem **table, char **args) {
             }
         }
         else if (strcmp(args[0], all_builtin[i]) == 0) {
-            return (*builtin_func[i]) (args);
+            result = (*builtin_func[i]) (args);
         }
     }
     return result;
