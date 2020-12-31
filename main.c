@@ -17,13 +17,16 @@ void input_loop (elem **table) {
     int status;                 // get input and call necessary function to 
                                 // execute the command
     do {
+        char cmd[1024] = "\e[1;34m";
+        char reset[1024] = "\x1B[0m";
         getcwd(cwd, sizeof(cwd));
-        strcat(cwd, "$ ");
-        line = readline(cwd);
+        strcat(cmd, cwd);
+        strcat(cmd, reset);
+        strcat(cmd, "$ ");
+        line = readline(cmd);
         add_history(line);
         args = split_line(line);
         if (is_alias(line)) {
-            printf("EXECUTING ALIAS\n");
             status = alias_handler(table, line);
         }
         else if (is_builtin(args)) {
@@ -33,7 +36,6 @@ void input_loop (elem **table) {
             status = execute_command(args);
         }
         free(line);
-        free(args);
     } while (status);
 }
 

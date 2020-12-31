@@ -22,7 +22,6 @@ char **split_line (char *line) {
     }
 
     token = strtok(line, TOK_DELIM);
-    printf("Token: %s\n", token);
 
     while (token != NULL) {
         tokens[position] = token;

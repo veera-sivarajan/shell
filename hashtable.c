@@ -44,7 +44,6 @@ elem *create_ele (elem **table, char *alias, char *command) {
 
 void insert_ele (elem **table, char *alias, char *command) {
     elem *temp = create_ele(table, alias, command);
-    printf("INSERTING %s = %s\n", alias, command);
     table[temp->index] = temp;
 }
 

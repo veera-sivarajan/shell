@@ -7,10 +7,6 @@
 int start_process (char **args) {
     pid_t pid, wpid;
     int status;
-    printf("Executing:\n");
-    for (int i = 0; args[i]; ++i) {
-        printf("%s\n", args[i]);
-    }
     
     pid = fork();
     
