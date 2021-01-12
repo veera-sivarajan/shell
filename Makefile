@@ -1,8 +1,9 @@
 CC = gcc
-CFLAGS = -g -Wall -Ilinenoise 
-OBJECTS = $(filter-out test.c, $(wildcard *.c)) ../Shell/linenoise/linenoise.c #Source files
+CFLAGS = -g -Wall 
+OBJECTS = $(filter-out test.c, $(wildcard *.c)) #Source files
 NAME = myshell #Desired filename
 TODELETE = *.o # the *.o should be the same as the objects
+LIBS = -lreadline
 
 mt-collatz : $(OBJECTS)
 	$(CC) $(CFLAGS) $(OBJECTS) -o $(NAME) $(LIBS) 

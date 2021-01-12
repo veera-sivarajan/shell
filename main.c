@@ -3,7 +3,8 @@
 # include "builtin.h"
 # include <string.h>
 # include <unistd.h>
-# include "linenoise.h" 
+# include <readline/readline.h>
+# include <readline/history.h>
 
 # define RESET "\x1B[0m"
 # define BLUE "\e[1;34m"
@@ -25,13 +26,8 @@ void input_loop (elem **table) {
         // strcat(cmd, cwd);
         // strcat(cmd, reset);
         // strcat(cmd, "$$ ");
-        // line = readline(">> ");
-        // add_history(line);
-        line = linenoise(">> "); 
-        if (strcmp(line, "exit") == 0) {
-            status = 0;
-        }
-        // args = split_line(line);
+        line = readline(">> ");
+        add_history(line);
         // if (is_alias(line)) {
         //     status = alias_handler(table, line);
         // }
