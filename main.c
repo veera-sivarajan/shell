@@ -16,7 +16,7 @@ void input_loop (elem **table) {
     // char cwd[SIZE];
     // char cmd[SIZE];
     // char reset[SIZE];
-    // char **args;
+    char **args;
     int status = 1;                 // get input and call necessary function to 
                                 // execute the command
     do {
@@ -28,6 +28,7 @@ void input_loop (elem **table) {
         // strcat(cmd, "$$ ");
         line = readline(">> ");
         add_history(line);
+        args = split_line(line);
         // if (is_alias(line)) {
         //     status = alias_handler(table, line);
         // }
@@ -37,7 +38,12 @@ void input_loop (elem **table) {
         // else {
         //     status = execute_command(args);
         // }
-        free(line);
+        // free(line);
+        for (int i = 0; args[i]; ++i) {
+            printf("FREEING ARGS...\n");
+            free(args[i]);
+        } 
+        free(args);
     } while (status);
     // for (int i = 0; args[i]; ++i) {
     //     printf("ARGS: %s\n", args[i]);

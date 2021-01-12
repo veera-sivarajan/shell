@@ -35,7 +35,6 @@ char **split_line (char *line) {
 
         token = strtok(NULL, TOK_DELIM);
     }
-    free(token);
     tokens[position] = NULL;
     return tokens;
 }
