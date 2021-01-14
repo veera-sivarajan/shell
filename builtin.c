@@ -36,7 +36,7 @@ int is_builtin (char **words) {
 
 int builtin_handler (elem **table, char **args) {
     int result;
-    int num_builtins = get_num_builtins() - 1;
+    int num_builtins = get_num_builtins();
     for (int i = 0; i < num_builtins; ++i) {
         if (strcmp(args[0], "alias") == 0) {
             // printf("%s\n", temp[0]);
