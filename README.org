@@ -14,7 +14,7 @@ A simple shell to execute commands.
 make
 #+END_SRC
 
-#BEGIN_SRC sh
+#+BEGIN_SRC sh
 make run
 #+END_SRC
 ** Acknowledgement
