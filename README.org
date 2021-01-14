@@ -10,10 +10,12 @@ A simple shell to execute commands.
 - Auto complete
 - Command history
 ** Install
+Compile:
 #+BEGIN_SRC sh
 make
 #+END_SRC
 
+Execute:
 #+BEGIN_SRC sh
 make run
 #+END_SRC
