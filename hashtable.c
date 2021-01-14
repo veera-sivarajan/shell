@@ -5,6 +5,7 @@
 # define PR_THREE 86969 
 # define FIRST 37
 # define NUM_ELE 10 
+# define MEM_SIZE 1000
 
 int index_list[100];
 int count = 0;
@@ -19,19 +20,12 @@ hash_function (char *word) {
     return num % PR_THREE;
 }
 
-// void load_table () {
-//     int num_aliases = NUM_ELE;
-//     table = calloc(num_aliases, sizeof(elem));
-//     if (!table) {
-//         fprintf(stderr, "load_aliases: table mallocation error\n");
-//         exit(EXIT_FAILURE);
-//     }
-// }
-
 elem *create_ele (elem **table, char *alias, char *command) {
     elem *temp = (elem *) malloc(sizeof(elem));
-    temp->alias = alias;
-    temp->command = command;
+    temp->alias = (char *) malloc(MEM_SIZE);
+    temp->command = (char *) malloc(MEM_SIZE);
+    strcpy(temp->alias, alias);
+    strcpy(temp->command, command);
     unsigned long index = hash_function(alias);
     index %= NUM_ELE;
     while (table[index] != NULL) {

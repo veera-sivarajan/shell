@@ -1,14 +1,6 @@
 # include "aliases.h"
 # include "execute.h"
 
-// char *all_aliases[] = {  // FIXME: alias names should be stored dynamically
-//     "edlab",
-//     "ls",
-//     "lock",                        
-//     "books",
-//     "prj"
-// };
-
 char *all_aliases[10];
 int num_aliases = 0;
 
