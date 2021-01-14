@@ -9,5 +9,13 @@ A simple shell to execute commands.
 - Commands can be aliased
 - Auto complete
 - Command history
+** Install
+#+BEGIN_SRC sh
+make
+#+END_SRC
+
+#BEGIN_SRC sh
+make run
+#+END_SRC
 ** Acknowledgement
 Stephan Brennan's [[https://brennan.io/2015/01/16/write-a-shell-in-c/][Tutorial]]
