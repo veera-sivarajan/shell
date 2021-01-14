@@ -39,7 +39,6 @@ void input_loop (elem **table) {
             else {
                 status = execute_command(args);
             }
-            printf("ENTERING FREEE AREANA\n");
             free(args);
             free(line);
         }
@@ -48,12 +47,13 @@ void input_loop (elem **table) {
 
 int main (int argc, char **argv) {
     printf("Hello, %s\n", getenv("USER"));
-    elem **table = calloc(NUM_ELE, sizeof(elem));
+    elem **table = (elem **) calloc(NUM_ELE, sizeof(elem *));
     insert_alias(table, "cl", "cd /home/veera");
     insert_alias(table, "lock", "loginctl lock-session");
     insert_alias(table, "books", "okular sujatha.pdf"); 
     insert_alias(table, "edlab", "ssh vsivarajan@elnux.cs.umass.edu");
     input_loop(table);
+    print_aliases(table);
     free_table(table);
     return EXIT_SUCCESS;
 }
