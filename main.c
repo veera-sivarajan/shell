@@ -39,12 +39,9 @@ void input_loop (elem **table) {
             else {
                 status = execute_command(args);
             }
-            // printf("ENTERING FREEE AREANA\n");
-            for (int i = 0; args[i]; ++i) {
-                free(args[i]);
-                printf("FREEING ARGS...\n");
-            } 
-            // // free(args);
+            printf("ENTERING FREEE AREANA\n");
+            free(args);
+            free(line);
         }
     } while (status);
 }
@@ -57,19 +54,6 @@ int main (int argc, char **argv) {
     insert_alias(table, "books", "okular sujatha.pdf"); 
     insert_alias(table, "edlab", "ssh vsivarajan@elnux.cs.umass.edu");
     input_loop(table);
-    extern char *all_aliases[10];
-    printf("ENTERING MAIN FREE AREANA\n");
-    int size = get_num_aliases();
-    printf("SIZE: %i\n", size);
-    for (int i = 0; i < size; ++i) {
-        if (i != 1 && i != 3) {
-            free(table[i]->alias);
-            free(table[i]->command);
-            printf("Freeing table element...%i\n", i);
-        }
-    }
-    // printf("%s\n", table[1]->alias);
-    printf("TABLE ELEMENTS FREED\n");
-    free(table);
+    free_table(table);
     return EXIT_SUCCESS;
 }

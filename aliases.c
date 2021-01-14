@@ -37,11 +37,10 @@ void print_aliases (elem **table) {
 }
 
 int alias_handler (elem **table, char *alias) {
-    char *temp = alias;
-    char *command = get_command(table, temp);
-    char buf[strlen(command)];
+    char *command = get_command(table, alias);
+    char buf[strlen(command) + 1];
     strcpy(buf, command);
-    // return split_line(buf);
+    buf[strlen(buf) + 1] = '\0';
     return execute_command(split_line(buf));
 }
 

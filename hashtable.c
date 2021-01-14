@@ -53,10 +53,16 @@ char *get_ele (elem **table, char *alias) {
     }
 }
 
-// void free_table (void) {
-//     for (int i = 0; i < count; ++i) {
-//         free(table[index_list[i]]);
-//     }
-//     free(table);
-// }
+void free_table (elem **table) {
+    printf("COUNT: %i\n", count);
+    printf("%s\n", table[0]->alias);
+    printf("%s\n", table[0]->command);
+    for (int i = 0; i < count; ++i) {
+        // free(table[i]->alias);
+        // free(table[i]->command);
+        printf("%s\n", table[i]->alias);
+        printf("%s\n", table[i]->command);
+    }
+    free(table);
+}
 

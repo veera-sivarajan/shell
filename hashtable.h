@@ -18,6 +18,6 @@ void insert_ele (elem **table, char *alias, char *command);
 
 char *get_ele (elem **table, char *alias);
 
-void free_table (void);
+void free_table (elem **table);
 
 
