@@ -17,7 +17,8 @@ hash_function (char *word) {
         num = (num * PR_ONE) ^ (word[0] * PR_TWO);
         word++;
     }
-    return num % PR_THREE;
+    num = (num % PR_THREE) % NUM_ELE;
+    return num;
 }
 
 elem *create_ele (elem **table, char *alias, char *command) {
@@ -27,7 +28,6 @@ elem *create_ele (elem **table, char *alias, char *command) {
     strcpy(temp->alias, alias);
     strcpy(temp->command, command);
     unsigned long index = hash_function(alias);
-    index %= NUM_ELE;
     while (table[index] != NULL) {
         index++;
     }
@@ -41,13 +41,12 @@ void insert_ele (elem **table, char *alias, char *command) {
     table[temp->index] = temp;
 }
 
-char *get_ele (elem **table, char *alias) {    
+elem *get_ele (elem **table, char *alias) {    
     unsigned long address = hash_function(alias);
     address %= NUM_ELE;
     while (1) {
         if (strcmp(table[address]->alias, alias) == 0) {
-            // printf("RETURNING %s\n", table[address]->command);
-            return table[address]->command;
+            return table[address];
         }
         address++;
     }
@@ -57,7 +56,10 @@ void free_table (elem **table) {
     extern char *all_aliases[10]; 
     int size = 4;
     for (int i = 0; i < size; ++i) {
-        free(get_ele(table, all_aliases[i]));
+        elem *temp = get_ele(table, all_aliases[i]);
+        free(temp->alias);
+        free(temp->command);
+        free(temp);
     }
 }
 

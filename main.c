@@ -55,5 +55,6 @@ int main (int argc, char **argv) {
     input_loop(table);
     print_aliases(table);
     free_table(table);
+    free(table);
     return EXIT_SUCCESS;
 }

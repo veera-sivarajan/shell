@@ -50,5 +50,6 @@ void insert_alias (elem **table, char *alias, char *command) {
 }
 
 char *get_command (elem **table, char *alias) {
-    return get_ele(table, alias);
+    elem *temp = get_ele(table, alias);
+    return temp->command;
 }
