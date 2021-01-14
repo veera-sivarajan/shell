@@ -54,6 +54,7 @@ int main (int argc, char **argv) {
     insert_alias(table, "edlab", "ssh vsivarajan@elnux.cs.umass.edu");
     input_loop(table);
     print_aliases(table);
+    // free_aliases();
     free_table(table);
     free(table);
     return EXIT_SUCCESS;

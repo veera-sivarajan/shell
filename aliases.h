@@ -18,3 +18,5 @@ int alias_handler (elem **table, char *alias);
 void insert_alias (elem **table, char *alias, char *command);
 
 char *get_command (elem **table, char *alias);
+
+void free_aliases (void);

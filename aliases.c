@@ -1,11 +1,14 @@
 # include "aliases.h"
 # include "execute.h"
 
+# define BUF_SIZE 100
+
 char *all_aliases[10];
 int num_aliases = 0;
 
 void add_alias (char *word) {
-    all_aliases[num_aliases] = word;
+    all_aliases[num_aliases] = (char *) malloc(BUF_SIZE);
+    strcpy(all_aliases[num_aliases], word);
     num_aliases += 1;
 }
 
@@ -52,4 +55,10 @@ void insert_alias (elem **table, char *alias, char *command) {
 char *get_command (elem **table, char *alias) {
     elem *temp = get_ele(table, alias);
     return temp->command;
+}
+
+void free_aliases (void) {
+    for (int i = 0; i < num_aliases; ++i) {
+        free(all_aliases[i]);
+    }
 }
