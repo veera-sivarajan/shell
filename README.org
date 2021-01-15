@@ -1,6 +1,8 @@
 * Shell
 A simple shell to execute commands.
+
 ![](https://media.giphy.com/media/nbcE4lTCPJg3rEsoZG/giphy.gif)
+
 ** Limitations
 - No pipes
 - No redirection
