@@ -3,13 +3,13 @@
 # include "parse.h"
 # include "hashtable.h"
 
-void add_alias (char *word);
+void add_alias (elem **table, char *word);
 
 char **split_command (char *command);
 
 int get_num_aliases ();
 
-int is_alias (char *word);
+int is_alias (elem **table, char *word);
 
 void print_aliases (elem **table);
 

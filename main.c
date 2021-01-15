@@ -30,7 +30,7 @@ void input_loop (elem **table) {
         add_history(line);
         args = split_line(line);
         if (args) {
-            if (is_alias(line)) {
+            if (is_alias(table, line)) {
                 status = alias_handler(table, line);
             }
             else if (is_builtin(args)) {
@@ -54,7 +54,7 @@ int main (int argc, char **argv) {
     insert_alias(table, "edlab", "ssh vsivarajan@elnux.cs.umass.edu");
     input_loop(table);
     free_table(table);
-    free_aliases();
+    // free_aliases();
     free(table);
     return EXIT_SUCCESS;
 }

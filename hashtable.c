@@ -53,10 +53,10 @@ elem *get_ele (elem **table, char *alias) {
 }
 
 void free_table (elem **table) {
-    extern char *all_aliases[10]; 
+    extern int alias_indexes[10]; 
     int size = 4;
     for (int i = 0; i < size; ++i) {
-        elem *temp = get_ele(table, all_aliases[i]);
+        elem *temp = get_ele(table, table[alias_indexes[i]]->alias);
         free(temp->alias);
         free(temp->command);
         free(temp);

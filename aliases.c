@@ -2,15 +2,15 @@
 # include "execute.h"
 
 # define BUF_SIZE 50 
+# define NUM_ALIAS 10 
 
-char *all_aliases[10];
+int alias_indexes[NUM_ALIAS];
 int num_aliases = 0;
 
-void add_alias (char *word) {
-    printf("ADDING ALIAS\n");
-    all_aliases[num_aliases] = (char *) malloc(BUF_SIZE);
-    strcpy(all_aliases[num_aliases], word);
-    num_aliases += 1;
+void add_alias (elem **table, char *word) {
+    elem *temp = get_ele(table, word);
+    alias_indexes[num_aliases] = temp->index;
+    num_aliases++;
 }
 
 char **split_command (char *variable) {
@@ -23,10 +23,10 @@ int get_num_aliases () {
     return num_aliases;
 }
 
-int is_alias (char *word) {
+int is_alias (elem **table, char *word) {
     int size = get_num_aliases();
     for (int i = 0; i < size; ++i) {
-        if (strcmp(word, all_aliases[i]) == 0) {
+        if (strcmp(word, table[alias_indexes[i]]->alias) == 0) {
             return 1;
         }
     }
@@ -36,7 +36,7 @@ int is_alias (char *word) {
 void print_aliases (elem **table) {
     int size = get_num_aliases();
     for (int i = 0; i < size; ++i) {
-        printf("%s = \"%s\"\n", all_aliases[i], get_command(table, all_aliases[i]));
+        printf("%s = \"%s\"\n", table[alias_indexes[i]]->alias, get_command(table, table[alias_indexes[i]]->alias));
     }
 }
 
@@ -49,8 +49,8 @@ int alias_handler (elem **table, char *alias) {
 }
 
 void insert_alias (elem **table, char *alias, char *command) {
-    add_alias(alias);
     insert_ele(table, alias, command);
+    add_alias(table, alias);
 }
 
 char *get_command (elem **table, char *alias) {
@@ -58,10 +58,10 @@ char *get_command (elem **table, char *alias) {
     return temp->command;
 }
 
-void free_aliases (void) {
-    printf("NUM ALIASES: %i\n", num_aliases);
-    for (int i = 0; i < num_aliases; ++i) {
-        free(all_aliases[i]);
-        printf("FREEEINGG...%i\n", i);
-    }
-}
+// void free_aliases (void) {
+//     printf("NUM ALIASES: %i\n", num_aliases);
+//     for (int i = 0; i < num_aliases; ++i) {
+//         free(all_aliases[i]);
+//         printf("FREEEINGG...%i\n", i);
+//     }
+// }
