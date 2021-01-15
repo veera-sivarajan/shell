@@ -9,14 +9,12 @@ A simple shell to execute commands.
 - Commands can be aliased
 - Auto complete
 - Command history
-** Install
-Compile:
+** Installation
 #+BEGIN_SRC sh
+# Compile
 make
-#+END_SRC
 
-Execute:
-#+BEGIN_SRC sh
+# Execute
 make run
 #+END_SRC
 ** Acknowledgement
