@@ -1,10 +1,7 @@
 * Shell
 A simple shell to execute commands.
- [[https://media.giphy.com/media/nbcE4lTCPJg3rEsoZG/giphy.gif][GIF]]
-
 #+CAPTION: Shell Demo
 [[https://media.giphy.com/media/nbcE4lTCPJg3rEsoZG/giphy.gif]]
-
 ** Limitations
 - No pipes
 - No redirection
