@@ -23,8 +23,9 @@ int get_num_builtins() {
 }
 
 int is_builtin (char **words) {
-    if (words == NULL)
+    if (words == NULL) {
         return 0;
+    }
     int size = get_num_builtins();
     for (int i = 0; i < size; ++i) {
         if (strcmp(words[0], all_builtin[i]) == 0) {
@@ -40,7 +41,7 @@ int builtin_handler (elem **table, char **args) {
     for (int i = 0; i < num_builtins; ++i) {
         if (strcmp(args[0], "alias") == 0) {
             // printf("%s\n", temp[0]);
-            if (args[1] && args[2]) {
+            if ((args[1] != NULL) && (args[2] != NULL)) {
                 insert_alias(table, args[1], args[2]);
                 printf("Command: %s\n", get_command(table, args[1]));
                 result = 1;
@@ -54,6 +55,7 @@ int builtin_handler (elem **table, char **args) {
         }
         else if (strcmp(args[0], all_builtin[i]) == 0) {
             result = (*builtin_func[i]) (args);
+            break;
         }
     }
     return result;

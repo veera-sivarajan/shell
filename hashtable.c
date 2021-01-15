@@ -54,9 +54,10 @@ elem *get_ele (elem **table, char *alias) {
 
 void free_table (elem **table) {
     extern int alias_indexes[10]; 
-    int size = 4;
-    for (int i = 0; i < size; ++i) {
+    extern int num_aliases;
+    for (int i = 0; i < num_aliases; ++i) {
         elem *temp = get_ele(table, table[alias_indexes[i]]->alias);
+        printf("FREEEING %s\n", temp->alias);
         free(temp->alias);
         free(temp->command);
         free(temp);
