@@ -10,6 +10,7 @@ int num_aliases = 0;
 void add_alias (elem **table, char *word) {
     elem *temp = get_ele(table, word);
     alias_indexes[num_aliases] = temp->index;
+    // printf("Hash: %i at index: %i\n", temp->index, num_aliases);
     num_aliases++;
 }
 
@@ -42,9 +43,9 @@ void print_aliases (elem **table) {
 
 int alias_handler (elem **table, char *alias) {
     char *command = get_command(table, alias);
-    char buf[strlen(command) + 1];
+    char buf[strlen(command)];
     strcpy(buf, command);
-    buf[strlen(buf) + 1] = '\0';
+    // buf[strlen(buf) + 1] = '\0';
     return execute_command(split_line(buf));
 }
 
