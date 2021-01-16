@@ -30,7 +30,7 @@ void input_loop (elem **table) {
         add_history(line);
         args = split_line(line);
         if (args) {
-            if (is_alias(table, line)) {
+            if (is_alias(table, args)) {
                 status = alias_handler(table, line);
             }
             else if (is_builtin(args)) {
@@ -50,7 +50,7 @@ int main (int argc, char **argv) {
     elem **table = (elem **) calloc(NUM_ELE, sizeof(elem *));
     insert_alias(table, "cl", "cd /home/veera");
     insert_alias(table, "lock", "loginctl lock-session");
-    insert_alias(table, "books", "okular sujatha.pdf"); 
+    insert_alias(table, "ls", "ls --color"); 
     insert_alias(table, "edlab", "ssh vsivarajan@elnux.cs.umass.edu");
     input_loop(table);
     free_table(table);

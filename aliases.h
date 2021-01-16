@@ -9,7 +9,7 @@ char **split_command (char *command);
 
 int get_num_aliases ();
 
-int is_alias (elem **table, char *word);
+int is_alias (elem **table, char **word);
 
 void print_aliases (elem **table);
 

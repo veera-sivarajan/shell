@@ -24,10 +24,10 @@ int get_num_aliases () {
     return num_aliases;
 }
 
-int is_alias (elem **table, char *word) {
+int is_alias (elem **table, char **word) {
     int size = get_num_aliases();
     for (int i = 0; i < size; ++i) {
-        if (strcmp(word, table[alias_indexes[i]]->alias) == 0) {
+        if ((strcmp(word[0], table[alias_indexes[i]]->alias) == 0) && word[1] == NULL) {
             return 1;
         }
     }
