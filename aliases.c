@@ -27,8 +27,8 @@ int get_num_aliases () {
 int is_alias (elem **table, char **word) {
     int size = get_num_aliases();
     for (int i = 0; i < size; ++i) {
-        if ((strcmp(word[0], table[alias_indexes[i]]->alias) == 0) && word[1] == NULL) {
-            return 1;
+        if ((strcmp(word[0], table[alias_indexes[i]]->alias) == 0)) {
+                return 1;
         }
     }
     return 0;
@@ -41,10 +41,19 @@ void print_aliases (elem **table) {
     }
 }
 
-int alias_handler (elem **table, char *alias) {
-    char *command = get_command(table, alias);
-    char buf[strlen(command)];
+int alias_handler (elem **table, char **args) {
+    char *command = get_command(table, args[0]);
+    int size = strlen(command);
+    for (int i = 1; args[i]; ++i) {
+        size += strlen(args[i]);
+    }
+    char buf[size * 2];
+    printf("SIZE OF BUF: %i\n", size);
     strcpy(buf, command);
+    for (int i = 1; args[i]; ++i) {
+        strcat(buf, " ");
+        strcat(buf, args[i]);
+    }
     // buf[strlen(buf) + 1] = '\0';
     return execute_command(split_line(buf));
 }
