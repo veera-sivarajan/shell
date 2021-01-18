@@ -32,20 +32,17 @@ void input_loop (elem **table) {
         if (args) {
             if (is_alias(table, args)) {
                 status = alias_handler(table, args);
-                continue;
             }
             else if (is_builtin(args)) {
                 status = builtin_handler(table, args);
-                continue;
             }
             else {
                 printf("LAST CASE\n");
                 status = execute_command(args);
-                continue;
             }
-            free(args);
-            free(line);
         }
+        free(args);
+        free(line);
     } while (status);
 }
 
@@ -58,7 +55,6 @@ int main (int argc, char **argv) {
     insert_alias(table, "edlab", "ssh vsivarajan@elnux.cs.umass.edu");
     input_loop(table);
     free_table(table);
-    // free_aliases();
     free(table);
     return EXIT_SUCCESS;
 }

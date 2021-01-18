@@ -44,16 +44,17 @@ void print_aliases (elem **table) {
 int alias_handler (elem **table, char **args) {
     char *command = get_command(table, args[0]);
     int size = strlen(command);
-    for (int i = 1; args[i]; ++i) {
-        size += strlen(args[i]);
-    }
-    char buf[size * 2];
-    printf("SIZE OF BUF: %i\n", size);
+    // for (int i = 1; args[i]; ++i) {
+    //     size += strlen(args[i]);
+    // }
+    // char buf[size * 2];
+    char buf[size];
+    // printf("SIZE OF BUF: %i\n", size);
     strcpy(buf, command);
-    for (int i = 1; args[i]; ++i) {
-        strcat(buf, " ");
-        strcat(buf, args[i]);
-    }
+    // for (int i = 1; args[i]; ++i) {
+    //     strcat(buf, " ");
+    //     strcat(buf, args[i]);
+    // }
     // buf[strlen(buf) + 1] = '\0';
     return execute_command(split_line(buf));
 }
@@ -67,11 +68,3 @@ char *get_command (elem **table, char *alias) {
     elem *temp = get_ele(table, alias);
     return temp->command;
 }
-
-// void free_aliases (void) {
-//     printf("NUM ALIASES: %i\n", num_aliases);
-//     for (int i = 0; i < num_aliases; ++i) {
-//         free(all_aliases[i]);
-//         printf("FREEEINGG...%i\n", i);
-//     }
-// }
