@@ -43,11 +43,7 @@ void print_aliases (elem **table) {
 
 int alias_handler (elem **table, char **args) {
     char *command = get_command(table, args[0]);
-    int size = strlen(command);
-    for (int i = 1; args[i]; ++i) {
-        size += strlen(args[i]);
-    }
-    char buf[size * 2];
+    char buf[100];
     // printf("SIZE OF BUF: %i\n", size);
     strcpy(buf, command);
     for (int i = 1; args[i]; ++i) {
