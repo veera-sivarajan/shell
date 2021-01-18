@@ -1,13 +1,8 @@
 # include "execute.h"
 # include "builtin.h"
-# include <signal.h>
 
 # define RESET "\x1B[0m"
 # define RED   "\x1B[31m"
-
-void handle_sigint(int sig) {
-    printf("HANDLING SIGINT: %i\n", sig);
-}
 
 int start_process (char **args) {
     pid_t pid, wpid;
