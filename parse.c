@@ -11,6 +11,10 @@ char **split_line (char *line) {
     int bufsize= TOK_BUFSIZE;
     int position = 0;
     char **tokens = malloc(bufsize * sizeof(char *)); // sizeof(char *) == 8
+    if (!tokens) {
+        fprintf(stderr, "split_line: tokens malloc error\n");
+        exit(EXIT_FAILURE);
+    }
     char *token;
 
     if (!tokens) {

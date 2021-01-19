@@ -16,7 +16,7 @@ void input_loop (elem **table) {
     char cwd[SIZE];
     char cmd[SIZE];
     char reset[SIZE];
-    char **args;
+    char **args = NULL;
     int status = 1;                 // get input and call necessary function to 
                                 // execute the command
     do {
@@ -30,7 +30,7 @@ void input_loop (elem **table) {
         if (line[0] != '\0') {
             add_history(line);  
             args = split_line(line);
-            if (args) {
+            if (args != NULL) {
                 if (is_alias(table, args)) {
                     status = alias_handler(table, args);
                 }
@@ -38,7 +38,6 @@ void input_loop (elem **table) {
                     status = builtin_handler(table, args);
                 }
                 else {
-                    printf("LAST CASE\n");
                     status = execute_command(args);
                 }
             }
@@ -51,6 +50,10 @@ void input_loop (elem **table) {
 int main (int argc, char **argv) {
     printf("Hello, %s\n", getenv("USER"));
     elem **table = (elem **) calloc(NUM_ELE, sizeof(elem *));
+    if (!table) {
+        fprintf(stderr, "hashtable: malloc error\n");
+        exit(EXIT_FAILURE);
+    }
     insert_alias(table, "cl", "cd /home/veera");
     insert_alias(table, "lock", "loginctl lock-session");
     insert_alias(table, "ls", "ls --color"); 

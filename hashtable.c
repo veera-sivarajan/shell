@@ -23,8 +23,20 @@ hash_function (char *word) {
 
 elem *create_ele (elem **table, char *alias, char *command) {
     elem *temp = (elem *) malloc(sizeof(elem));
+    if (!temp) {
+        fprintf(stderr, "create_ele: temp malloc error\n");
+        exit(EXIT_FAILURE);
+    }
     temp->alias = (char *) malloc(MEM_SIZE);
+    if (!alias) {
+        fprintf(stderr, "create_ele: alias malloc error\n");
+        exit(EXIT_FAILURE);
+    }
     temp->command = (char *) malloc(MEM_SIZE);
+    if (!command) {
+        fprintf(stderr, "create_ele: command malloc error\n");
+        exit(EXIT_FAILURE);
+    }
     strcpy(temp->alias, alias);
     strcpy(temp->command, command);
     unsigned long index = hash_function(alias);
