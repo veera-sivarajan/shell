@@ -6,9 +6,10 @@ A simple shell to execute commands.
 - No pipes
 - No redirection
 - No quoting
-- Does not interpret regular expressions
+- No regular expressions
+- No signal handling
 ** Features
-- Commands can be aliased
+- Command substitution 
 - Auto complete
 - Command history
 ** Installation
