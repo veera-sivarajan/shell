@@ -31,7 +31,7 @@ void input_loop (elem **table) {
             add_history(line);  
             args = split_line(line);
             if (args != NULL) {
-                if (is_alias(table, args)) {
+                if (is_alias(table, line)) {
                     status = alias_handler(table, args);
                 }
                 else if (is_builtin(args)) {

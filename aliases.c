@@ -26,10 +26,10 @@ int get_num_aliases () {
     return num_aliases;
 }
 
-int is_alias (elem **table, char **word) {
+int is_alias (elem **table, char *alias) {
     int size = get_num_aliases();
     for (int i = 0; i < size; ++i) {
-        if ((strcmp(word[0], table[alias_indexes[i]]->alias) == 0)) {
+        if ((strcmp(alias, table[alias_indexes[i]]->alias) == 0)) {
                 return 1;
         }
     }
@@ -39,7 +39,8 @@ int is_alias (elem **table, char **word) {
 void print_aliases (elem **table) {
     int size = get_num_aliases();
     for (int i = 0; i < size; ++i) {
-        printf("%s = \"%s\"\n", table[alias_indexes[i]]->alias, get_command(table, table[alias_indexes[i]]->alias));
+        printf("%s = \"%s\"\n", table[alias_indexes[i]]->alias,
+               get_command(table, table[alias_indexes[i]]->alias));
     }
 }
 
@@ -60,8 +61,13 @@ int alias_handler (elem **table, char **args) {
 }
 
 void insert_alias (elem **table, char *alias, char *command) {
-    insert_ele(table, alias, command);
-    add_alias(table, alias);
+    if (!is_alias(table, alias)) {
+        insert_ele(table, alias, command);
+        add_alias(table, alias);
+    }
+    else {
+        fprintf(stderr, "alias exists already\n");
+    }
 }
 
 char *get_command (elem **table, char *alias) {
