@@ -42,7 +42,7 @@ int builtin_handler (elem **table, char **args) {
         if (strcmp(args[0], "alias") == 0) {
             // printf("%s\n", temp[0]);
             if ((args[1] != NULL) && (args[2] != NULL)) {
-                insert_alias(table, args[1], args[2]);
+                insert_alias(table, args[1], args[2]);  // FIXME: Check if alias already exists
                 printf("Command: %s\n", get_command(table, args[1]));
                 result = 1;
                 break;

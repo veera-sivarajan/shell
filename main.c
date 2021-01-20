@@ -54,10 +54,12 @@ int main (int argc, char **argv) {
         fprintf(stderr, "hashtable: malloc error\n");
         exit(EXIT_FAILURE);
     }
-    insert_alias(table, "cl", "cd /home/veera");
+    insert_alias(table, "p", "pwd");
     insert_alias(table, "lock", "loginctl lock-session");
     insert_alias(table, "ls", "ls --color"); 
     insert_alias(table, "edlab", "ssh vsivarajan@elnux.cs.umass.edu");
+    // FIXME: this alias causes valgrind "Invalid read" error
+    // insert_alias(table, "make", "make -k"); 
     input_loop(table);
     free_table(table);
     free(table);

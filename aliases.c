@@ -14,6 +14,8 @@ void add_alias (elem **table, char *word) {
     num_aliases++;
 }
 
+// int alias_exist (elem **table, char *alias) {
+
 char **split_command (char *variable) {
     char buf[strlen(variable)];
     strcpy(buf, variable);

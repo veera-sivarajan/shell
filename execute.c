@@ -4,6 +4,7 @@
 # define RESET "\x1B[0m"
 # define RED   "\x1B[31m"
 
+
 int start_process (char **args) {
     pid_t pid, wpid;
     int status;

@@ -22,18 +22,19 @@ hash_function (char *word) {
 }
 
 elem *create_ele (elem **table, char *alias, char *command) {
-    elem *temp = (elem *) malloc(sizeof(elem));
+    printf("%s %s\n", alias, command);
+    elem *temp = (elem *) malloc(sizeof(elem) * 10);
     if (!temp) {
         fprintf(stderr, "create_ele: temp malloc error\n");
         exit(EXIT_FAILURE);
     }
-    temp->alias = (char *) malloc(MEM_SIZE);
-    if (!alias) {
+    temp->alias = (char *) malloc(sizeof(char *) * MEM_SIZE);
+    if (!temp->alias) {
         fprintf(stderr, "create_ele: alias malloc error\n");
         exit(EXIT_FAILURE);
     }
-    temp->command = (char *) malloc(MEM_SIZE);
-    if (!command) {
+    temp->command = (char *) malloc(sizeof(char *) * MEM_SIZE);
+    if (!temp->command) {
         fprintf(stderr, "create_ele: command malloc error\n");
         exit(EXIT_FAILURE);
     }
@@ -43,6 +44,7 @@ elem *create_ele (elem **table, char *alias, char *command) {
     while (table[index] != NULL) {
         index++;
     }
+    printf("INSERTING ELE at: %li\n", index);
     temp->index = index;
     index_list[count++] = index;
     return temp;
@@ -55,8 +57,8 @@ void insert_ele (elem **table, char *alias, char *command) {
 
 elem *get_ele (elem **table, char *alias) {    
     unsigned long address = hash_function(alias);
-    address %= NUM_ELE;
-    while (1) {
+    // address %= NUM_ELE;
+    while (1) { // FIXME: fetching an unknown alias will result in infinite loop
         if (strcmp(table[address]->alias, alias) == 0) {
             return table[address];
         }
