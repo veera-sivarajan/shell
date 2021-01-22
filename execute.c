@@ -39,12 +39,15 @@ int start_process (char **args) {
     return 1;
 }
 
-// wrapper function for start_process()
-// TODO this function should be removed and call start_process() directly 
 int execute_command (char **args) {
     if (args == NULL) {
         // Empty command was entered
         return 1;
+    }
+    for (int i = 0; i < get_num_builtins(); ++i) {
+        if (strcmp(args[0], all_builtin[i]) == 0) {
+            return (*builtin_func[i]) (args);
+        }
     }
     return start_process(args);
 }
