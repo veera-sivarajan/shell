@@ -7,9 +7,10 @@
 # define NUM_ELE 10 
 # define MEM_SIZE 1000
 
-int index_list[100];
+int index_list[100]; // not sure why these global variables exist
 int count = 0;
 
+// returns hash value for given string
 unsigned long
 hash_function (char *word) {
     unsigned num = FIRST;
@@ -21,9 +22,11 @@ hash_function (char *word) {
     return num;
 }
 
+// creates a element which contains an alias, its command and its index 
+// returns created element
+// NOTE created element should be freed
 elem *create_ele (elem **table, char *alias, char *command) {
-    printf("%s %s\n", alias, command);
-    elem *temp = (elem *) malloc(sizeof(elem) * 10);
+    elem *temp = (elem *) malloc(sizeof(elem) * NUM_ELE);
     if (!temp) {
         fprintf(stderr, "create_ele: temp malloc error\n");
         exit(EXIT_FAILURE);
@@ -42,7 +45,7 @@ elem *create_ele (elem **table, char *alias, char *command) {
     strcpy(temp->command, command);
     unsigned long index = hash_function(alias);
     while (table[index] != NULL) {
-        index++;
+        index++; // table is initialized with NULL because of calloc
     }
     printf("INSERTING ELE at: %li\n", index);
     temp->index = index;
@@ -50,11 +53,13 @@ elem *create_ele (elem **table, char *alias, char *command) {
     return temp;
 }
 
+// create an alias element and store in table
 void insert_ele (elem **table, char *alias, char *command) {
     elem *temp = create_ele(table, alias, command);
     table[temp->index] = temp;
 }
 
+// returns an alias element for given alias string
 elem *get_ele (elem **table, char *alias) {    
     unsigned long address = hash_function(alias);
     // address %= NUM_ELE;
@@ -66,9 +71,11 @@ elem *get_ele (elem **table, char *alias) {
     }
 }
 
+// free all elements in table 
 void free_table (elem **table) {
     extern int alias_indexes[10]; 
     extern int num_aliases;
+    printf("NUM ALIASES: %i\n", num_aliases);
     for (int i = 0; i < num_aliases; ++i) {
         elem *temp = get_ele(table, table[alias_indexes[i]]->alias);
         // printf("FREEEING %s\n", temp->alias);

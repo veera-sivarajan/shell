@@ -4,9 +4,11 @@
 # define BUF_SIZE 50 
 # define NUM_ALIAS 10 
 
-int alias_indexes[NUM_ALIAS];
-int num_aliases = 0;
+// FIXME using global variables is not a good practice
+int alias_indexes[NUM_ALIAS]; // array to store index of every alias
+int num_aliases = 0; // total number of aliases
 
+// store alias' index and increment total number of aliases
 void add_alias (elem **table, char *word) {
     elem *temp = get_ele(table, word);
     alias_indexes[num_aliases] = temp->index;
@@ -14,18 +16,21 @@ void add_alias (elem **table, char *word) {
     num_aliases++;
 }
 
-// int alias_exist (elem **table, char *alias) {
-
+// wrapper function for split_line()
+// converts string literal to string array
 char **split_command (char *variable) {
     char buf[strlen(variable)];
     strcpy(buf, variable);
     return split_line(buf);
 }
 
+// returns total number of aliases
+// not sure why it is a function
 int get_num_aliases () {
     return num_aliases;
 }
 
+// check if passed alias is an existing alias
 int is_alias (elem **table, char *alias) {
     int size = get_num_aliases();
     for (int i = 0; i < size; ++i) {
@@ -36,6 +41,7 @@ int is_alias (elem **table, char *alias) {
     return 0;
 }
 
+// print all aliased commands
 void print_aliases (elem **table) {
     int size = get_num_aliases();
     for (int i = 0; i < size; ++i) {
@@ -44,6 +50,7 @@ void print_aliases (elem **table) {
     }
 }
 
+// evaluates an alias entered by user
 int alias_handler (elem **table, char **args) {
     char *command = get_command(table, args[0]);
     char buf[50];
@@ -60,8 +67,9 @@ int alias_handler (elem **table, char **args) {
     return status;
 }
 
+// inserts a command into table at index equal to hash value of alias
 void insert_alias (elem **table, char *alias, char *command) {
-    if (!is_alias(table, alias)) {
+    if (!is_alias(table, alias)) { // Add only new alias 
         insert_ele(table, alias, command);
         add_alias(table, alias);
     }
@@ -70,6 +78,7 @@ void insert_alias (elem **table, char *alias, char *command) {
     }
 }
 
+// returns the command for a given alias
 char *get_command (elem **table, char *alias) {
     elem *temp = get_ele(table, alias);
     return temp->command;

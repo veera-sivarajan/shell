@@ -4,8 +4,11 @@
 # define TOK_BUFSIZE 64
 # define TOK_DELIM " \t\r\n\a\0"
 
+// splits a given string literal into words using strtok()
+// returns a double pointer to a list of words
+// NOTE returned value must be freed
 char **split_line (char *line) {
-    if (strlen(line) == 0) {
+    if (strlen(line) == 0) { // return NULL if user hits enter
         return NULL;
     }
     int bufsize= TOK_BUFSIZE;
@@ -16,14 +19,7 @@ char **split_line (char *line) {
         exit(EXIT_FAILURE);
     }
     char *token;
-
-    if (!tokens) {
-        fprintf(stderr, "split_line: tokens mallocation error\n");
-        exit(EXIT_FAILURE);
-    }
-
-    token = strtok(line, TOK_DELIM);
-
+    token = strtok(line, TOK_DELIM); 
     while (token != NULL) {
         tokens[position] = token;
         position += 1;

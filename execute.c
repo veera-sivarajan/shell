@@ -1,10 +1,8 @@
 # include "execute.h"
 # include "builtin.h"
 
-# define RESET "\x1B[0m"
-# define RED   "\x1B[31m"
-
-
+// fork, spawn new process and wait for the child to terminate 
+// returns 1 when child terminates
 int start_process (char **args) {
     pid_t pid, wpid;
     int status;
@@ -41,16 +39,12 @@ int start_process (char **args) {
     return 1;
 }
 
+// wrapper function for start_process()
+// TODO this function should be removed and call start_process() directly 
 int execute_command (char **args) {
     if (args == NULL) {
         // Empty command was entered
         return 1;
-    }
-
-    for (int i = 0; i < get_num_builtins(); ++i) {
-        if (strcmp(args[0], all_builtin[i]) == 0) {
-            return (*builtin_func[i]) (args);
-        }
     }
     return start_process(args);
 }

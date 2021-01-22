@@ -5,6 +5,7 @@
   Function declarations for builtin shell commnads:
 */
 
+// list of pointers to all builtin commands
 char *all_builtin[] = {
     "cd",
     "help",
@@ -12,16 +13,20 @@ char *all_builtin[] = {
     "alias"
 };
 
+
+// function pointers to all builtin commands' function
 int (*builtin_func[]) (char **) = {
     &change_dir,
     &help_cmd,
     &exit_cmd
 };
 
+// return total number of builting commands
 int get_num_builtins() {
     return sizeof(all_builtin) / sizeof(char *);
 }
 
+// check if first element in passed value is a builtin command
 int is_builtin (char **words) {
     if (words == NULL) {
         return 0;
@@ -35,15 +40,15 @@ int is_builtin (char **words) {
     return 0;
 }
 
+// evaluates a builtin command entered by user
+// TODO alias should be handled in a seperate function 
 int builtin_handler (elem **table, char **args) {
     int result;
     int num_builtins = get_num_builtins();
     for (int i = 0; i < num_builtins; ++i) {
-        if (strcmp(args[0], "alias") == 0) {
-            // printf("%s\n", temp[0]);
-            if ((args[1] != NULL) && (args[2] != NULL)) {
+        if (strcmp(args[0], "alias") == 0) { // alias command
+            if ((args[1] != NULL) && (args[2] != NULL)) { // user adds new alias
                 insert_alias(table, args[1], args[2]);
-                // printf("Command: %s\n", get_command(table, args[1]));
                 result = 1;
                 break;
             }
@@ -53,38 +58,43 @@ int builtin_handler (elem **table, char **args) {
                 break;
             }
         }
+        
+        // compare user entered builtin with all builtin commands
+        // and call the necessary function
         else if (strcmp(args[0], all_builtin[i]) == 0) {
-            result = (*builtin_func[i]) (args);
+            result = (*builtin_func[i]) (args);        
             break;
         }
     }
     return result;
 }
 
+// function to change directory
 int change_dir (char **args) {
     char prev_dir[1024];
     getcwd(prev_dir, sizeof(prev_dir));
-    if (args[1] == NULL) {
+    if (args[1] == NULL) { // change directory to $HOME
         if (chdir(getenv("HOME")) != 0) {
             perror("chdir to home error");
         }
     }
-    else if (*args[1] == '-') {
+    else if (*args[1] == '-') { // change directory to previous directory
         char *dir = getenv("OLDPWD");
         printf("%s\n", dir);
         if (chdir(dir) != 0) {
             perror("cd - error\n");
         }
     }
-    else {
+    else { // change directory to user entered path
         if (chdir(args[1]) != 0) {
             perror("chdir error");
         }
     }
-    setenv("OLDPWD", prev_dir, 1);
+    setenv("OLDPWD", prev_dir, 1); // update previous directory env variable
     return 1;
 }
 
+// list all builtin commands 
 int help_cmd (char **args) {
     printf("List of built-in commands:\n");
     for (int i = 0; i < get_num_builtins(); ++i) {
@@ -94,6 +104,7 @@ int help_cmd (char **args) {
     return 1;
 }
 
+// end the shell process
 int exit_cmd (char **args) {
     return 0;
 }

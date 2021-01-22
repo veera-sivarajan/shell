@@ -14,4 +14,4 @@ clean:
 	rm -f $(TODELETE)
 
 run:	myshell
-	valgrind --tool=memcheck --track-origins=yes ./myshell
+	valgrind -s --tool=memcheck --track-origins=yes ./myshell

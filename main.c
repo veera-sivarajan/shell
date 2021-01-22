@@ -8,59 +8,64 @@
 
 # define RESET "\x1B[0m"
 # define BLUE "\e[1;34m"
-# define NUM_ELE 10 
+# define NUM_ELE 100 
 # define SIZE 1024
 
+// shell REPL gets user input and calls necessary function to
+// execute the command
 void input_loop (elem **table) {
     char *line;
     char cwd[SIZE];
     char cmd[SIZE];
     char reset[SIZE];
     char **args = NULL;
-    int status = 1;                 // get input and call necessary function to 
-                                // execute the command
+    int status = 1;  
+                    
     do {
         strcpy(cmd, BLUE);
-        strcpy(reset, RESET);
+        strcpy(reset, RESET);  // colorize current working directory path 
         getcwd(cwd, sizeof(cwd));
         strcat(cmd, cwd);
         strcat(cmd, reset);
-        strcat(cmd, "$$ ");
-        line = readline(cmd);
+        strcat(cmd, "$$ "); // append "$$" to colorized path 
+        line = readline(cmd); // get user input with line editing 
         if (line[0] != '\0') {
-            add_history(line);  
+            add_history(line);  // add user input to command history 
             args = split_line(line);
             if (args != NULL) {
-                if (is_alias(table, line)) {
+                if (is_alias(table, line)) { // check if string is an alias
                     status = alias_handler(table, args);
                 }
-                else if (is_builtin(args)) {
+                else if (is_builtin(args)) { // check if command is a builtin
                     status = builtin_handler(table, args);
                 }
-                else {
+                else { // execute the command
                     status = execute_command(args);
                 }
             }
             free(args);
         }
         free(line);
-    } while (status);
+    } while (status); 
 }
 
 int main (int argc, char **argv) {
-    printf("Hello, %s\n", getenv("USER"));
+    printf("Hello, %s\n", getenv("USER")); // greeting message
+    // pointer pointing to a list of alias elements
     elem **table = (elem **) calloc(NUM_ELE, sizeof(elem *));
     if (!table) {
         fprintf(stderr, "hashtable: malloc error\n");
         exit(EXIT_FAILURE);
     }
-    insert_alias(table, "p", "pwd");
+    // insert all alias
+    insert_alias(table, "cl", "cd /home/veera/Classes/Fall20");
     insert_alias(table, "lock", "loginctl lock-session");
     insert_alias(table, "ls", "ls --color"); 
     insert_alias(table, "edlab", "ssh vsivarajan@elnux.cs.umass.edu");
-    // FIXME: this alias causes valgrind "Invalid read" error
-    // insert_alias(table, "make", "make -k"); 
+    // FIXME this alias causes valgrind "Invalid read" error
+    // insert_alias(table, "anui", "make -k"); 
     input_loop(table);
+    // free all allocated memory
     free_table(table);
     free(table);
     return EXIT_SUCCESS;
