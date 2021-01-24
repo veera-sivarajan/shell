@@ -1,18 +1,37 @@
 # include "execute.h"
 # include "builtin.h"
+# include <wordexp.h>
 
 // fork, spawn new process and wait for the child to terminate 
 // returns 1 when child terminates
 int start_process (char **args) {
     pid_t pid, wpid;
     int status;
+
+    wordexp_t result;
+    switch (wordexp(args[0], &result, 0)) { // Expand program name
+    case 0:
+        break;
+    case WRDE_NOSPACE:
+        wordfree(&result);
+    default:
+        return -1;
+    }
+
+    for (int i = 1; args[i] != NULL; ++i) {
+        if (wordexp(args[i], &result, WRDE_APPEND)) {
+            wordfree(&result);
+            return -1;
+        }
+    }
+
     
     pid = fork();
     
     if (pid == 0) {
         // Child process
         // char *filename = args[0]; // a.k.a program name
-        if (execvp(args[0], args) == -1) {
+        if (execvp(result.we_wordv[0], result.we_wordv) == -1) {
             perror("start_process execvp error");
         }
         exit(EXIT_FAILURE);
@@ -36,6 +55,7 @@ int start_process (char **args) {
         // WIFEXITED - returns true if child terminated normally
         // WIFSIGNALED - return true if child terminated by signal
     }
+    wordfree(&result);
     return 1;
 }
 

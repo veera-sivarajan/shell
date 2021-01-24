@@ -78,6 +78,11 @@ int change_dir (char **args) {
             perror("chdir to home error");
         }
     }
+    else if (*args[1] == '~') {
+        if (chdir(getenv("HOME")) != 0) {
+            perror("cd ~ error\n");
+        }
+    }
     else if (*args[1] == '-') { // change directory to previous directory
         char *dir = getenv("OLDPWD");
         printf("%s\n", dir);

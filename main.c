@@ -58,12 +58,11 @@ int main (int argc, char **argv) {
         exit(EXIT_FAILURE);
     }
     // insert all alias
-    insert_alias(table, "make", "make -k"); 
     insert_alias(table, "cl", "cd /home/veera/Classes/Fall20");
     insert_alias(table, "lock", "loginctl lock-session");
     insert_alias(table, "ls", "ls --color"); 
     insert_alias(table, "edlab", "ssh vsivarajan@elnux.cs.umass.edu");
-    // FIXME this alias causes valgrind "Invalid read" error
+    // FIXME adding an alias with "alias" as command results in valgrind error 
     input_loop(table);
     // free all allocated memory
     free_table(table);
