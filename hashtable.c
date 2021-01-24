@@ -31,12 +31,12 @@ elem *create_ele (elem **table, char *alias, char *command) {
         fprintf(stderr, "create_ele: temp malloc error\n");
         exit(EXIT_FAILURE);
     }
-    temp->alias = (char *) malloc(sizeof(char *) * MEM_SIZE);
+    temp->alias = (char *) malloc(MEM_SIZE);
     if (!temp->alias) {
         fprintf(stderr, "create_ele: alias malloc error\n");
         exit(EXIT_FAILURE);
     }
-    temp->command = (char *) malloc(sizeof(char *) * MEM_SIZE);
+    temp->command = (char *) malloc(MEM_SIZE);
     if (!temp->command) {
         fprintf(stderr, "create_ele: command malloc error\n");
         exit(EXIT_FAILURE);
@@ -49,7 +49,7 @@ elem *create_ele (elem **table, char *alias, char *command) {
     }
     printf("INSERTING ELE at: %li\n", index);
     temp->index = index;
-    index_list[count++] = index;
+    // index_list[count++] = index;
     return temp;
 }
 
@@ -64,8 +64,10 @@ elem *get_ele (elem **table, char *alias) {
     unsigned long address = hash_function(alias);
     // address %= NUM_ELE;
     while (1) { // FIXME: fetching an unknown alias will result in infinite loop
-        if (strcmp(table[address]->alias, alias) == 0) {
-            return table[address];
+        if (table[address] != NULL) {
+            if (strcmp(table[address]->alias, alias) == 0) {
+                return table[address];
+            }
         }
         address++;
     }
@@ -77,11 +79,9 @@ void free_table (elem **table) {
     extern int num_aliases;
     printf("NUM ALIASES: %i\n", num_aliases);
     for (int i = 0; i < num_aliases; ++i) {
-        elem *temp = get_ele(table, table[alias_indexes[i]]->alias);
-        // printf("FREEEING %s\n", temp->alias);
-        free(temp->alias);
-        free(temp->command);
-        free(temp);
+        free(table[alias_indexes[i]]->alias);
+        free(table[alias_indexes[i]]->command);
+        free(table[alias_indexes[i]]);
     }
 }
 

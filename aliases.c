@@ -80,6 +80,9 @@ void insert_alias (elem **table, char *alias, char *command) {
 
 // returns the command for a given alias
 char *get_command (elem **table, char *alias) {
-    elem *temp = get_ele(table, alias);
-    return temp->command;
+    if (is_alias(table, alias)) {
+        elem *temp = get_ele(table, alias);
+        return temp->command;
+    }
+    return NULL;
 }
