@@ -11,6 +11,32 @@
 # define NUM_ELE 100 
 # define SIZE 1024
 
+int evaluate (elem **table, char *input) {
+    char **args = NULL;
+    int status = 1;  
+    if (input == NULL) {  // exit on C-d (EOF character)
+        exit(EXIT_SUCCESS);
+    }
+    if (input[0] != '\0') {
+        add_history(input);  // add user input to command history 
+        args = split_line(input);
+        if (args != NULL) {
+            if (is_alias(table, input)) { // check if string is an alias
+                status = alias_handler(table, args);
+            }
+            else if (is_builtin(args)) { // check if command is a builtin
+                status = builtin_handler(table, args);
+            }
+            else { // execute the command
+                status = execute_command(args);
+            }
+        }
+        free(args);
+    }
+    free(input);
+    return status;
+}
+
 // shell REPL gets user input and calls necessary function to
 // execute the command
 void input_loop (elem **table) {
@@ -18,8 +44,7 @@ void input_loop (elem **table) {
     char cwd[SIZE];
     char cmd[SIZE];
     char reset[SIZE];
-    char **args = NULL;
-    int status = 1;  
+    int status = 0;
                     
     do {
         strcpy(cmd, BLUE);
@@ -29,23 +54,7 @@ void input_loop (elem **table) {
         strcat(cmd, reset);
         strcat(cmd, "$$ "); // append "$$" to colorized path 
         line = readline(cmd); // get user input with line editing 
-        if (line[0] != '\0') {
-            add_history(line);  // add user input to command history 
-            args = split_line(line);
-            if (args != NULL) {
-                if (is_alias(table, line)) { // check if string is an alias
-                    status = alias_handler(table, args);
-                }
-                else if (is_builtin(args)) { // check if command is a builtin
-                    status = builtin_handler(table, args);
-                }
-                else { // execute the command
-                    status = execute_command(args);
-                }
-            }
-            free(args);
-        }
-        free(line);
+        status = evaluate(table, line);
     } while (status); 
 }
 
