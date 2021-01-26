@@ -69,24 +69,21 @@ int builtin_handler (elem **table, char **args) {
     return result;
 }
 
+# define PATH_SIZE 256
 // function to change directory
+// TODO Add error handling for number of arguments more than one 
 int change_dir (char **args) {
-    if (args[2] != NULL) {
-        fprintf(stderr, "too many arguments\n");
-        return 1;
-    }
-    char prev_dir[1024];
+    char prev_dir[PATH_SIZE];
     getcwd(prev_dir, sizeof(prev_dir));
     if (args[1] == NULL) { // change directory to $HOME
         if (chdir(getenv("HOME")) != 0) {
             perror("chdir to home error");
         }
     }
-    // FIXME this case should be able to append all arguments to
-    // the path $HOME 
-    else if (args[1][0] == '~') { 
-        char path[256];
+    else if (args[1][0] == '~') { // append arguments to $HOME and cd into it 
+        char path[PATH_SIZE];
         strcpy(path, getenv("HOME"));
+        strcat(path, ++args[1]);
         if (chdir(path) != 0) {
             perror("cd ~ error\n");
         }
