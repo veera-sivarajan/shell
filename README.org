@@ -6,12 +6,12 @@ A simple shell to execute commands.
 - No pipes
 - No redirection
 - No quoting
-- No regular expressions
 - No signal handling
 ** Features
 - Command substitution 
 - Auto complete
 - Command history
+- String expansion like a posix shell
 ** Installation
 #+BEGIN_SRC sh
 # Compile
@@ -22,3 +22,4 @@ make run
 #+END_SRC
 ** Acknowledgement
 Stephan Brennan's [[https://brennan.io/2015/01/16/write-a-shell-in-c/][Tutorial]]
+[[https://sites.google.com/view/umass-cs-230][COMPSCI 230]] at UMass 
