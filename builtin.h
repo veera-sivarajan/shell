@@ -11,8 +11,6 @@ extern int (*builtin_func[]) (char **);
 
 int get_num_builtins();
 
-int alias_cmd (char **args);
-
 int is_builtin (char **word);
 
 int builtin_handler (elem **table, char **command);
@@ -23,5 +21,6 @@ int help_cmd (char **args);
 
 int exit_cmd (char **args);
 
-int lock_cmd (char **args);
+int export_cmd (char **args);
+
 

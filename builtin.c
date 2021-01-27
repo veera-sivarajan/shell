@@ -10,7 +10,7 @@ char *all_builtin[] = {
     "cd",
     "help",
     "exit",
-    "alias"
+    "export"
 };
 
 
@@ -18,7 +18,8 @@ char *all_builtin[] = {
 int (*builtin_func[]) (char **) = {
     &change_dir,
     &help_cmd,
-    &exit_cmd
+    &exit_cmd,
+    &export_cmd,
 };
 
 // return total number of builting commands
@@ -33,7 +34,7 @@ int is_builtin (char **words) {
     }
     int size = get_num_builtins();
     for (int i = 0; i < size; ++i) {
-        if (strcmp(words[0], all_builtin[i]) == 0) {
+        if ((strcmp(words[0], all_builtin[i]) == 0) || (strcmp(words[0], "alias") == 0)) {
             return 1;
         }
     }
@@ -117,4 +118,9 @@ int help_cmd (char **args) {
 // end the shell process
 int exit_cmd (char **args) {
     return 0;
+}
+
+int export_cmd (char **args) {
+    setenv(args[1], args[2], 1);
+    return 1;
 }
