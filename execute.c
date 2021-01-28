@@ -1,6 +1,7 @@
 # include "execute.h"
 # include "builtin.h"
 # include <wordexp.h>
+# include <signal.h>
 
 // fork, spawn new process and wait for the child to terminate 
 // returns 1 when child terminates
@@ -30,6 +31,7 @@ int start_process (char **args) {
     
     if (pid == 0) {
         // Child process
+        signal(SIGINT, SIG_DFL);
         // char *filename = args[0]; // a.k.a program name
         if (execvp(result.we_wordv[0], result.we_wordv) == -1) {
             perror("start_process execvp error");
