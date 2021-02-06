@@ -2,23 +2,6 @@
     A simple shell to execute commands.
     ![Shell Demo](https://media.giphy.com/media/nbcE4lTCPJg3rEsoZG/giphy.gif)
 
-## System Calls
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ## Limitations
     1. No pipes
     2. No redirection
