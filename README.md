@@ -1,6 +1,6 @@
 # Shell
-    A simple shell to execute commands.
-    ![Shell Demo](https://media.giphy.com/media/nbcE4lTCPJg3rEsoZG/giphy.gif)
+    - A simple shell to execute commands.
+    - ![Shell Demo](https://media.giphy.com/media/nbcE4lTCPJg3rEsoZG/giphy.gif)
 
 ## Limitations
     1. No pipes
