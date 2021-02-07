@@ -26,7 +26,6 @@ int start_process (char **args) {
         }
     }
 
-    
     pid = fork();
     
     if (pid == 0) {
@@ -40,7 +39,7 @@ int start_process (char **args) {
     }
     else if (pid < 0) {
         // Error forking
-        perror("fork() unsuccesul");
+        perror("fork() unsuccesful");
     }
     else {
         // Parent Process

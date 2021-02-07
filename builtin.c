@@ -33,9 +33,14 @@ int is_builtin (char **words) {
         return 0;
     }
     int size = get_num_builtins();
-    for (int i = 0; i < size; ++i) {
-        if ((strcmp(words[0], all_builtin[i]) == 0) || (strcmp(words[0], "alias") == 0)) {
-            return 1;
+    if (strcmp(words[0], "alias") == 0) {
+        return 1;
+    }
+    else {
+        for (int i = 0; i < size; ++i) {
+            if ((strcmp(words[0], all_builtin[i]) == 0)) {
+                return 1;
+            }
         }
     }
     return 0;

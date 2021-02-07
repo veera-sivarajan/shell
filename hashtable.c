@@ -47,7 +47,6 @@ elem *create_ele (elem **table, char *alias, char *command) {
     while (table[index] != NULL) {
         index++; // table is initialized with NULL because of calloc
     }
-    printf("INSERTING ELE at: %li\n", index);
     temp->index = index;
     // index_list[count++] = index;
     return temp;
@@ -77,7 +76,6 @@ elem *get_ele (elem **table, char *alias) {
 void free_table (elem **table) {
     extern int alias_indexes[10]; 
     extern int num_aliases;
-    printf("NUM ALIASES: %i\n", num_aliases);
     for (int i = 0; i < num_aliases; ++i) {
         free(table[alias_indexes[i]]->alias);
         free(table[alias_indexes[i]]->command);

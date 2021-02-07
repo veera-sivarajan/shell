@@ -2,7 +2,7 @@
 # include "execute.h"
 # include "builtin.h"
 # include <string.h>
-# include <unistd.h>
+          
 # include <readline/readline.h>
 # include <readline/history.h>
 
@@ -60,6 +60,7 @@ void input_loop (elem **table) {
 
 int main (int argc, char **argv) {
     signal(SIGINT, SIG_IGN);
+    signal(SIGTSTP, SIG_IGN);
     printf("Hello, %s\n", getenv("USER")); // greeting message
     // pointer pointing to a list of alias elements
     elem **table = (elem **) calloc(NUM_ELE, sizeof(elem *));
@@ -71,7 +72,7 @@ int main (int argc, char **argv) {
     insert_alias(table, "cl", "cd /home/veera/Classes/Fall20");
     insert_alias(table, "lock", "loginctl lock-session");
     insert_alias(table, "ls", "ls --color"); 
-    insert_alias(table, "edlab", "ssh vsivarajan@elnux.cs.umass.edu");
+    insert_alias(table, "books", "cd ~/Books");
     input_loop(table);
     // free all allocated memory
     free_table(table);
