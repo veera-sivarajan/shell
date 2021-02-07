@@ -1,8 +1,7 @@
 # Shell
 A simple shell to execute commands.
 
-![Shell Demo](https://media.giphy.com/media/nbcE4lTCPJg3rEsoZG/giphy.gif)
-
+![Shell Demo](https://media.giphy.com/media/FHJi3Ge3a0UF6EWOfp/giphy.gif)
 ## Limitations
 1. No pipes
 2. No redirection
