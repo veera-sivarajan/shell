@@ -11,6 +11,7 @@
 # define NUM_ELE 100 
 # define SIZE 1024
 
+// input string are not null terminated
 int evaluate (elem **table, char *input) {
     char **args = NULL;
     int status = 1;  
@@ -61,6 +62,10 @@ void input_loop (elem **table) {
 int main (int argc, char **argv) {
     signal(SIGINT, SIG_IGN);
     signal(SIGTSTP, SIG_IGN);
+    using_history();
+    if (read_history("history.txt")) {
+        fprintf(stderr, "read history error\n");
+    }
     printf("Hello, %s\n", getenv("USER")); // greeting message
     // pointer pointing to a list of alias elements
     elem **table = (elem **) calloc(NUM_ELE, sizeof(elem *));
@@ -75,7 +80,13 @@ int main (int argc, char **argv) {
     insert_alias(table, "books", "cd ~/Books");
     input_loop(table);
     // free all allocated memory
+    if (append_history(1000, "history.txt")) {
+        fprintf(stderr, "write history error\n");
+    }
+    clear_history();
     free_table(table);
     free(table);
     return EXIT_SUCCESS;
 }
+
+    
