@@ -1,7 +1,5 @@
 # include "execute.h"
 # include "builtin.h"
-# include <wordexp.h>
-# include <signal.h>
 
 // fork, spawn new process and wait for the child to terminate 
 // returns 1 when child terminates

@@ -4,6 +4,8 @@
 # include <unistd.h>
 # include <errno.h>
 # include <sys/wait.h>
+# include <wordexp.h>
+# include <signal.h>
 
 int start_process(char **args);
 
