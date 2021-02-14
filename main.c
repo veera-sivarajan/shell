@@ -11,29 +11,43 @@
 # define NUM_ELE 100 
 # define SIZE 1024
 
+int parse (elem **table, char *input) {
+    if (input == NULL) { // exit on C-d (EOF Character)
+        exit(EXIT_SUCCESS);
+    }
+    if (input[0] != '\0') { // don't evaluate string when user press enter
+        add_history(input);
+        command *cmd_table = (command *) calloc(1000, sizeof(command));
+        cmd_table->command = (char **) malloc(100 * sizeof(char *));
+        split_pipe(input, cmd_table);
+        for (int i = 0; i <= cmd_table->num_cmds; ++i) {
+            // printf("%s\n", cmd_table->command[i]);
+            evaluate(table, cmd_table->command[i]);
+            free(cmd_table->command[i]);
+        }
+        free(cmd_table->command);
+        free(cmd_table);
+        free(input);
+    }
+}
+
 // input string are not null terminated
 int evaluate (elem **table, char *input) {
     char **args = NULL;
     int status = 1;  
-    if (input == NULL) {  // exit on C-d (EOF character)
-        exit(EXIT_SUCCESS);
-    }
-    if (input[0] != '\0') {
-        add_history(input);  // add user input to command history 
-        args = split_line(input);
-        if (args != NULL) {
-            if (is_alias(table, input)) { // check if string is an alias
-                status = alias_handler(table, args);
-            }
-            else if (is_builtin(args)) { // check if command is a builtin
-                status = builtin_handler(table, args);
-            }
-            else { // execute the command
-                status = execute_command(args);
-            }
+    args = split_line(input);
+    if (args != NULL) {
+        if (is_alias(table, input)) { // check if string is an alias
+            status = alias_handler(table, args);
         }
-        free(args);
+        else if (is_builtin(args)) { // check if command is a builtin
+            status = builtin_handler(table, args);
+        }
+        else { // execute the command
+            status = execute_command(args);
+        }
     }
+    free(args);
     free(input);
     return status;
 }
@@ -78,6 +92,7 @@ int main (int argc, char **argv) {
     insert_alias(table, "lock", "loginctl lock-session");
     insert_alias(table, "ls", "ls --color"); 
     insert_alias(table, "books", "cd ~/Books");
+    insert_alias(table, "ff", "emacsclient -n");
     input_loop(table);
     // free all allocated memory
     if (append_history(1000, "history.txt")) {
@@ -88,5 +103,3 @@ int main (int argc, char **argv) {
     free(table);
     return EXIT_SUCCESS;
 }
-
-    
