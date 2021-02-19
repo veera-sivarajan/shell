@@ -32,6 +32,7 @@ int start_process (char **args) {
         // char *filename = args[0]; // a.k.a program name
         if (execvp(result.we_wordv[0], result.we_wordv) == -1) {
             perror("start_process execvp error");
+            // execvp("command_not_found_handle", result.we_wordv[0]); // TODO: Check if this will work
         }
         exit(EXIT_FAILURE);
     }

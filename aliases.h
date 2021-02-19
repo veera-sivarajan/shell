@@ -13,7 +13,7 @@ int is_alias (elem **table, char *line);
 
 void print_aliases (elem **table);
 
-int alias_handler (elem **table, char **args);
+char *alias_handler (elem **table, char **args);
 
 void insert_alias (elem **table, char *alias, char *command);
 

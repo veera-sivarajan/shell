@@ -13,7 +13,7 @@ char **split_line (char *line) {
     }
     int bufsize= TOK_BUFSIZE;
     int position = 0;
-    char **tokens = malloc(bufsize * sizeof(char *)); // sizeof(char *) == 8
+    char **tokens = calloc(bufsize, sizeof(char *)); // sizeof(char *) == 8
     if (!tokens) {
         fprintf(stderr, "split_line: tokens malloc error\n");
         exit(EXIT_FAILURE);
@@ -37,4 +37,19 @@ char **split_line (char *line) {
     }
     tokens[position] = NULL;
     return tokens;
+}
+
+void split_pipe (char *input, pipeline *cmd_table) {
+    int i = 0;
+    char *split = strtok(input, "|");
+    // printf("%s\n", split);
+    cmd_table->cmd[i] = (char *) malloc(100);
+    strcpy(cmd_table->cmd[i], split);
+    while ((split = strtok(NULL, "|")) != NULL) {
+        i += 1;
+        // printf("%s\n", ++split);
+        cmd_table->cmd[i] = (char *) malloc(100);
+        strcpy(cmd_table->cmd[i], ++split);
+    }
+    cmd_table->num_cmds = i;
 }

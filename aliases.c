@@ -5,6 +5,7 @@
 # define NUM_ALIAS 10 
 
 // FIXME using global variables is not a good practice
+//       global variables are poor man's parameters
 int alias_indexes[NUM_ALIAS]; // array to store index of every alias
 int num_aliases = 0; // total number of aliases
 
@@ -50,8 +51,9 @@ void print_aliases (elem **table) {
     }
 }
 
+// FIXME: Should return a string instead of evaluating
 // evaluates an alias entered by user
-int alias_handler (elem **table, char **args) {
+char *alias_handler (elem **table, char **args) {
     char *command = get_command(table, args[0]);
     char buf[50];
     // printf("SIZE OF BUF: %i\n", size);
@@ -61,10 +63,11 @@ int alias_handler (elem **table, char **args) {
         strcat(buf, args[i]);
     }
     buf[strlen(buf) + 1] = '\0';
-    char **split_command = split_line(buf);
-    int status = execute_command(split_command);
-    free(split_command);
-    return status;
+    // char **split_command = split_line(buf);
+    // int status = execute_command(split_command);
+    // free(split_command);
+    // return status;
+    return buf;
 }
 
 // inserts a command into table at index equal to hash value of alias
