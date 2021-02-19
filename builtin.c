@@ -10,7 +10,8 @@ char *all_builtin[] = {
     "cd",
     "help",
     "exit",
-    "export"
+    "export",
+    "alias"
 };
 
 
@@ -20,6 +21,7 @@ int (*builtin_func[]) (char **) = {
     &help_cmd,
     &exit_cmd,
     &export_cmd,
+    &alias_cmd
 };
 
 // return total number of builting commands
@@ -33,14 +35,9 @@ int is_builtin (char **words) {
         return 0;
     }
     int size = get_num_builtins();
-    if (strcmp(words[0], "alias") == 0) {
-        return 1;
-    }
-    else {
-        for (int i = 0; i < size; ++i) {
-            if ((strcmp(words[0], all_builtin[i]) == 0)) {
-                return 1;
-            }
+    for (int i = 0; i < size; ++i) {
+        if ((strcmp(words[0], all_builtin[i]) == 0)) {
+            return 1;
         }
     }
     return 0;
@@ -52,27 +49,28 @@ int builtin_handler (elem **table, char **args) {
     int result;
     int num_builtins = get_num_builtins();
     for (int i = 0; i < num_builtins; ++i) {
-        if (strcmp(args[0], "alias") == 0) { // alias command
-            if ((args[1] != NULL) && (args[2] != NULL)) { // user adds new alias
-                insert_alias(table, args[1], args[2]);
-                result = 1;
-                break;
-            }
-            else {
-                print_aliases(table); // list all aliases
-                result = 1;
-                break;
-            }
-        }
-        
         // compare user entered builtin with all builtin commands
         // and call the necessary function
-        else if (strcmp(args[0], all_builtin[i]) == 0) {
+        if (strcmp(args[0], all_builtin[i]) == 0) {
             result = (*builtin_func[i]) (args);        
             break;
         }
     }
     return result;
+}
+
+// TODO: finish alias command
+int alias_cmd (char **args) {
+    static elem **table = (elem **) calloc(NUM_ELE, sizeof(elem *));
+    if ((args[1] != NULL) && (args[2] != NULL)) {
+        insert_alias(table, args[1], args[2]);
+        return 1;
+    }
+    else {
+        print_aliases(table);
+        return 1;
+    }
+    return 0;
 }
 
 # define PATH_SIZE 256

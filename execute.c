@@ -69,5 +69,6 @@ int execute_command (char **args) {
             return (*builtin_func[i]) (args);
         }
     }
+    if (is_alias(
     return start_process(args);
 }

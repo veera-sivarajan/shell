@@ -70,6 +70,12 @@ char *alias_handler (elem **table, char **args) {
     return buf;
 }
 
+# define NUM_ELE 100 
+void alias_wrapper (int func_num, char **args) {
+    switch (func_num) {
+    case 1:
+        
+
 // inserts a command into table at index equal to hash value of alias
 void insert_alias (elem **table, char *alias, char *command) {
     if (!is_alias(table, alias)) { // Add only new alias 

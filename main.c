@@ -7,7 +7,6 @@
 
 # define RESET "\x1B[0m"
 # define BLUE "\e[1;34m"
-# define NUM_ELE 100 
 # define SIZE 1024
 
 int parse (elem **table, char *input) {
@@ -32,18 +31,19 @@ int parse (elem **table, char *input) {
         free(input);
     }
 }
+
 // FIXME: alias_handler() should return the string to be executed
 // input string are not null terminated
 int evaluate (elem **table, char *input) {
-    char *exec_string;
+    char *exec_string = NULL;
     char **args = NULL;
     int status = 1;  
     args = split_line(input);
     if (args != NULL) {
-        if (is_alias(table, input)) { // check if string is an alias
-            // status = alias_handler(table, args);
-            strcpy(exec_string, alias_handler(table, args));
-        }
+        // if (is_alias(table, input)) { // check if string is an alias
+        //     // status = alias_handler(table, args);
+        //     strcpy(exec_string, alias_handler(table, args));
+        // }
         // else if (is_builtin(args)) { // check if command is a builtin
         //     status = builtin_handler(table, args);
         // }
@@ -86,7 +86,8 @@ int main (int argc, char **argv) {
     }
     printf("Hello, %s\n", getenv("USER")); // greeting message
     // pointer pointing to a list of alias elements
-    elem **table = (elem **) calloc(NUM_ELE, sizeof(elem *));
+    // FIXME: alias should be accessed only from builtin.c
+    // elem **table = (elem **) calloc(NUM_ELE, sizeof(elem *));
     if (!table) {
         fprintf(stderr, "hashtable: malloc error\n");
         exit(EXIT_FAILURE);
