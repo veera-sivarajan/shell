@@ -36,26 +36,21 @@
 // FIXME: alias_handler() should return the string to be executed
 // input string are not null terminated
 int evaluate (elem **table, char *input) {
-    char *exec_string = (char *) malloc(100); 
     char **args = NULL;
     int status = 1;  
     args = split_line(input);
     if (args != NULL) {
         if (is_alias(table, input)) { // check if string is an alias
-            // status = alias_handler(table, args);
-            // strcpy(exec_string, alias_handler(table, args));
-            alias_handler(table, args, exec_string);
-            printf("STRING: %s\n", exec_string);
+            status = alias_handler(table, args);
         }
-        if (is_builtin(args)) {
-            status = builtin_handler (table, args);
+        else if (is_builtin(args)) {
+            status = builtin_handler(table, args);
         }
         // printf("Exec string: %s\n", exec_string);
         else {
             status = execute_command(args);
         }
     }
-    free(exec_string);
     free(args);
     free(input);
     return status;

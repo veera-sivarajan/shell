@@ -53,7 +53,7 @@ void print_aliases (elem **table) {
 
 // FIXME: Should return a string instead of evaluating
 // evaluates an alias entered by user
-void alias_handler (elem **table, char **args, char *exec_string) {
+int alias_handler (elem **table, char **args) {
     char *command = get_command(table, args[0]);
     char buf[50];
     // printf("SIZE OF BUF: %i\n", size);
@@ -63,13 +63,10 @@ void alias_handler (elem **table, char **args, char *exec_string) {
         strcat(buf, args[i]);
     }
     buf[strlen(buf) + 1] = '\0';
-    printf("alias_handler\n");
-    strcpy(exec_string, buf);
-    // printf("Exec_string: %s\n", exec_string);
-    // char **split_command = split_line(buf);
-    // int status = execute_command(split_command);
-    // free(split_command);
-    // return status;
+    char **split_command = split_line(buf);
+    int status = execute_command(split_command);
+    free(split_command);
+    return status;
 }
 
 // inserts a command into table at index equal to hash value of alias
