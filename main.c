@@ -10,29 +10,6 @@
 # define SIZE 1024
 # define NUM_ELE 100 
 
-// int parse (elem **table, char *input) {
-//     int input_fd = 0;
-//     int pipe_fd[2];
-//     if (input == NULL) { // exit on C-d (EOF Character)
-//         exit(EXIT_SUCCESS);
-//     }
-//     if (input[0] != '\0') { // don't evaluate string when user press enter
-//         add_history(input);
-//         pipeline *cmd_table = (pipeline *) calloc(1000, sizeof(pipeline));
-//         cmd_table->cmd = (char **) malloc(100 * sizeof(char *));
-//         split_pipe(input, cmd_table);
-//         for (int i = 0; i <= cmd_table->num_cmds; ++i) {
-//             // printf("%s\n", cmd_table->cmd[i]);
-//             pipe(pipe_fd);
-//             evaluate(table, cmd_table->cmd[i]);
-//             free(cmd_table->cmd[i]);
-//         }
-//         free(cmd_table->cmd);
-//         free(cmd_table);
-//         free(input);
-//     }
-// }
-
 // FIXME: alias_handler() should return the string to be executed
 // input string are not null terminated
 int evaluate (elem **table, char *input) {
@@ -56,6 +33,32 @@ int evaluate (elem **table, char *input) {
     return status;
 }
 
+int parse (elem **table, char *input) {
+    int input_fd = 0;
+    int result = 0;
+    // int pipe_fd[2];
+    if (input == NULL) { // exit on C-d (EOF Character)
+        exit(EXIT_SUCCESS);
+    }
+    if (input[0] != '\0') { // don't evaluate string when user press enter
+        add_history(input);
+        pipeline *cmd_table = (pipeline *) calloc(1000, sizeof(pipeline));
+        cmd_table->cmd = (char **) malloc(100 * sizeof(char *));
+        split_pipe(input, cmd_table);
+        printf("NUM_CMDS: %i\n", cmd_table->num_cmds);
+        for (int i = 0; i < cmd_table->num_cmds; ++i) {
+            // printf("%s\n", cmd_table->cmd[i]);
+            // pipe(pipe_fd);
+            printf("EVALUATING: %s\n", cmd_table->cmd[i]);
+            result = evaluate(table, cmd_table->cmd[i]);
+        }
+        free(cmd_table->cmd);
+        free(cmd_table);
+        free(input);
+    }
+    return result;
+}
+
 // shell REPL gets user input and calls necessary function to
 // execute the command
 void input_loop (elem **table) {
@@ -73,7 +76,7 @@ void input_loop (elem **table) {
         strcat(cmd, reset);
         strcat(cmd, "$$ "); // append "$$" to colorized path 
         line = readline(cmd); // get user input with line editing 
-        status = evaluate(table, line);
+        status = parse(table, line);
     } while (status); 
 }
 
