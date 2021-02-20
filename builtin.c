@@ -10,8 +10,7 @@ char *all_builtin[] = {
     "cd",
     "help",
     "exit",
-    "export",
-    "alias"
+    "export"
 };
 
 
@@ -20,8 +19,7 @@ int (*builtin_func[]) (char **) = {
     &change_dir,
     &help_cmd,
     &exit_cmd,
-    &export_cmd,
-    &alias_cmd
+    &export_cmd
 };
 
 // return total number of builting commands
@@ -34,6 +32,9 @@ int is_builtin (char **words) {
     if (words == NULL) {
         return 0;
     }
+    if (strcmp(words[0], "alias") == 0) {
+        return 1;
+    }
     int size = get_num_builtins();
     for (int i = 0; i < size; ++i) {
         if ((strcmp(words[0], all_builtin[i]) == 0)) {
@@ -43,35 +44,33 @@ int is_builtin (char **words) {
     return 0;
 }
 
-// evaluates a builtin command entered by user
-// TODO alias should be handled in a seperate function 
-int builtin_handler (elem **table, char **args) {
-    int result;
-    int num_builtins = get_num_builtins();
-    for (int i = 0; i < num_builtins; ++i) {
-        // compare user entered builtin with all builtin commands
-        // and call the necessary function
-        if (strcmp(args[0], all_builtin[i]) == 0) {
-            result = (*builtin_func[i]) (args);        
-            break;
-        }
-    }
-    return result;
-}
-
 // TODO: finish alias command
-int alias_cmd (char **args) {
-    static elem **table = (elem **) calloc(NUM_ELE, sizeof(elem *));
+int alias_cmd (elem **table, char **args) {
     if ((args[1] != NULL) && (args[2] != NULL)) {
         insert_alias(table, args[1], args[2]);
         return 1;
     }
-    else {
-        print_aliases(table);
-        return 1;
+    print_aliases(table);
+    return 1;
+}
+
+// evaluates a builtin command entered by user
+// TODO alias should be handled in a seperate function 
+int builtin_handler (elem **table, char **args) {
+    int num_builtins = get_num_builtins();
+    if (strcmp(args[0], "alias") == 0) {
+        return alias_cmd(table, args);
+    }
+    for (int i = 0; i < num_builtins; ++i) {
+        // compare user entered builtin with all builtin commands
+        // and call the necessary function
+        if (strcmp(args[0], all_builtin[i]) == 0) {
+            return (*builtin_func[i]) (args);        
+        }
     }
     return 0;
 }
+
 
 # define PATH_SIZE 256
 // function to change directory

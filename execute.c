@@ -61,14 +61,12 @@ int start_process (char **args) {
 
 int execute_command (char **args) {
     if (args == NULL) {
-        // Empty command was entered
-        return 1;
+        return 1;  // Empty command was entered
     }
-    for (int i = 0; i < get_num_builtins(); ++i) {
-        if (strcmp(args[0], all_builtin[i]) == 0) {
-            return (*builtin_func[i]) (args);
-        }
-    }
-    if (is_alias(
+    // for (int i = 0; i < get_num_builtins(); ++i) {
+    //     if (strcmp(args[0], all_builtin[i]) == 0) {
+    //         return (*builtin_func[i]) (args);
+    //     }
+    // }
     return start_process(args);
 }
