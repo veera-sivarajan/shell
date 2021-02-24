@@ -51,6 +51,7 @@ void split_pipe (char *input, pipeline *cmd_table) {
         cmd_table->cmd[i] = (char *) malloc(100);
         strcpy(cmd_table->cmd[i], ++split);
     }
+    cmd_table->cmd[i] = NULL;
     cmd_table->num_cmds = (i + 1);
     // printf("i: %i\n", i + 1);
 }

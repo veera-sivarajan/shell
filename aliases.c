@@ -1,5 +1,4 @@
 # include "aliases.h"
-# include "execute.h"
 
 # define BUF_SIZE 50 
 # define NUM_ALIAS 10 
@@ -53,7 +52,7 @@ void print_aliases (elem **table) {
 
 // FIXME: Should return a string instead of evaluating
 // evaluates an alias entered by user
-int alias_handler (elem **table, char **args) {
+int alias_handler (elem **table, char **args, FD *fdescs) {
     char *command = get_command(table, args[0]);
     char buf[50];
     // printf("SIZE OF BUF: %i\n", size);
@@ -64,7 +63,7 @@ int alias_handler (elem **table, char **args) {
     }
     buf[strlen(buf) + 1] = '\0';
     char **split_command = split_line(buf);
-    int status = execute_command(split_command);
+    int status = execute_command(split_command, fdescs);
     free(split_command);
     return status;
 }

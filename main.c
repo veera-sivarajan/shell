@@ -1,6 +1,4 @@
-# include "execute.h"
 # include "builtin.h"
-# include <string.h>
           
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -12,20 +10,20 @@
 
 // FIXME: alias_handler() should return the string to be executed
 // input string are not null terminated
-int evaluate (elem **table, char *input) {
+int evaluate (elem **table, char *input, FD *fdescs) {
     char **args = NULL;
     int status = 1;  
     args = split_line(input);
     if (args != NULL) {
         if (is_alias(table, input)) { // check if string is an alias
-            status = alias_handler(table, args);
+            status = alias_handler(table, args, fdescs);
         }
         else if (is_builtin(args)) {
             status = builtin_handler(table, args);
         }
         // printf("Exec string: %s\n", exec_string);
         else {
-            status = execute_command(args);
+            status = execute_command(args, fdescs);
         }
     }
     free(args);
@@ -33,10 +31,16 @@ int evaluate (elem **table, char *input) {
     return status;
 }
 
+// typedef struct file_descriptors {
+//     int input_fd;
+//     int pipe_fd[2];
+// } FD;
+
 int parse (elem **table, char *input) {
-    int input_fd = 0;
+    FD *fdescs = (FD *) malloc (10 * sizeof(FD)); 
+    fdescs->input_fd = 0; // first process reads input from stdin == 0
     int result = 0;
-    // int pipe_fd[2];
+    int i;
     if (input == NULL) { // exit on C-d (EOF Character)
         exit(EXIT_SUCCESS);
     }
@@ -46,12 +50,19 @@ int parse (elem **table, char *input) {
         cmd_table->cmd = (char **) malloc(100 * sizeof(char *));
         split_pipe(input, cmd_table);
         printf("NUM_CMDS: %i\n", cmd_table->num_cmds);
-        for (int i = 0; i < cmd_table->num_cmds; ++i) {
+        for (i = 0; i < cmd_table->num_cmds - 1; ++i) {
             // printf("%s\n", cmd_table->cmd[i]);
-            // pipe(pipe_fd);
+            pipe(fdescs->pipe_fd);
             printf("EVALUATING: %s\n", cmd_table->cmd[i]);
-            result = evaluate(table, cmd_table->cmd[i]);
+            result = evaluate(table, cmd_table->cmd[i], fdescs);
+            close(fdescs->pipe_fd[1]);
+            fdescs->input_fd = fdescs->pipe_fd[0];
         }
+        if (fdescs->input_fd != 0) {
+            dup2(fdescs->input_fd, 0);
+        }
+        result = evaluate(table, cmd_table->cmd[i], fdescs);
+        free(fdescs);
         free(cmd_table->cmd);
         free(cmd_table);
         free(input);

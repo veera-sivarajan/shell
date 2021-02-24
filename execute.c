@@ -1,9 +1,8 @@
 # include "execute.h"
-# include "builtin.h"
 
 // fork, spawn new process and wait for the child to terminate 
 // returns 1 when child terminates
-int start_process (char **args) {
+int start_process (char **args, FD *fdescs) {
     pid_t pid, wpid;
     int status;
 
@@ -30,6 +29,16 @@ int start_process (char **args) {
         // Child process
         signal(SIGINT, SIG_DFL);
         // char *filename = args[0]; // a.k.a program name
+        if (fdescs->input_fd != 0) {
+            dup2(fdescs->input_fd, 0);
+            close(fdescs->input_fd);
+        }
+
+        int out = fdescs->pipe_fd[1];
+        if (out != 1) {
+            dup2(out, 1);
+            close(out);
+        }
         if (execvp(result.we_wordv[0], result.we_wordv) == -1) {
             perror("start_process execvp error");
             // execvp("command_not_found_handle", result.we_wordv[0]); // TODO: Check if this will work
@@ -40,26 +49,26 @@ int start_process (char **args) {
         // Error forking
         perror("fork() unsuccesful");
     }
-    else {
-        // Parent Process
-        do {
-            wpid = waitpid(pid, &status, WUNTRACED);
-            if (wpid == -1) {
-                perror("waitpid error");
-                exit(EXIT_FAILURE);
-            }
-        } while (!WIFEXITED(status) && !WIFSIGNALED(status));
+    // else {
+    //     // Parent Process
+    //     do {
+    //         wpid = waitpid(pid, &status, WUNTRACED);
+    //         if (wpid == -1) {
+    //             perror("waitpid error");
+    //             exit(EXIT_FAILURE);
+    //         }
+    //     } while (!WIFEXITED(status) && !WIFSIGNALED(status));
         // status is a pointer to the location where status information for
         // terminating process is stored
         // WUNTRACED - return if a child has stopped (but not traced via ptrace)
         // WIFEXITED - returns true if child terminated normally
         // WIFSIGNALED - return true if child terminated by signal
-    }
+    // }
     wordfree(&result);
     return 1;
 }
 
-int execute_command (char **args) {
+int execute_command (char **args, FD *fdescs) {
     if (args == NULL) {
         return 1;  // Empty command was entered
     }
@@ -68,5 +77,5 @@ int execute_command (char **args) {
     //         return (*builtin_func[i]) (args);
     //     }
     // }
-    return start_process(args);
+    return start_process(args, fdescs);
 }

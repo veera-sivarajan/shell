@@ -1,7 +1,7 @@
-# include <stdio.h>
 # include <string.h>
 # include "parse.h"
 # include "hashtable.h"
+# include "execute.h"
 
 void add_alias (elem **table, char *word);
 
@@ -13,7 +13,7 @@ int is_alias (elem **table, char *line);
 
 void print_aliases (elem **table);
 
-int alias_handler (elem **table, char **args);
+int alias_handler (elem **table, char **args, FD *fdescs);
 
 void insert_alias (elem **table, char *alias, char *command);
 
