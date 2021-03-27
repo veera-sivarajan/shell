@@ -1,6 +1,7 @@
 # include "parse.h"
 # include "execute.h"
 # include "builtin.h"
+# include "scanner.h"
 # include <string.h>
           
 # include <readline/readline.h>
@@ -11,25 +12,25 @@
 # define NUM_ELE 100 
 # define SIZE 1024
 
-int parse (elem **table, char *input) {
-    if (input == NULL) { // exit on C-d (EOF Character)
-        exit(EXIT_SUCCESS);
-    }
-    if (input[0] != '\0') { // don't evaluate string when user press enter
-        add_history(input);
-        command *cmd_table = (command *) calloc(1000, sizeof(command));
-        cmd_table->command = (char **) malloc(100 * sizeof(char *));
-        split_pipe(input, cmd_table);
-        for (int i = 0; i <= cmd_table->num_cmds; ++i) {
-            // printf("%s\n", cmd_table->command[i]);
-            evaluate(table, cmd_table->command[i]);
-            free(cmd_table->command[i]);
-        }
-        free(cmd_table->command);
-        free(cmd_table);
-        free(input);
-    }
-}
+// int parse (elem **table, char *input) {
+//     if (input == NULL) { // exit on C-d (EOF Character)
+//         exit(EXIT_SUCCESS);
+//     }
+//     if (input[0] != '\0') { // don't evaluate string when user press enter
+//         add_history(input);
+//         command *cmd_table = (command *) calloc(1000, sizeof(command));
+//         cmd_table->command = (char **) malloc(100 * sizeof(char *));
+//         split_pipe(input, cmd_table);
+//         for (int i = 0; i <= cmd_table->num_cmds; ++i) {
+//             // printf("%s\n", cmd_table->command[i]);
+//             evaluate(table, cmd_table->command[i]);
+//             free(cmd_table->command[i]);
+//         }
+//         free(cmd_table->command);
+//         free(cmd_table);
+//         free(input);
+//     }
+// }
 
 // input string are not null terminated
 int evaluate (elem **table, char *input) {
@@ -59,7 +60,7 @@ void input_loop (elem **table) {
     char cwd[SIZE];
     char cmd[SIZE];
     char reset[SIZE];
-    int status = 0;
+    int status = 1;
                     
     do {
         strcpy(cmd, BLUE);
@@ -69,12 +70,16 @@ void input_loop (elem **table) {
         strcat(cmd, reset);
         strcat(cmd, "$$ "); // append "$$" to colorized path 
         line = readline(cmd); // get user input with line editing 
-        status = evaluate(table, line);
+        if (strcmp(line, "exit") == 0) {
+            exit(EXIT_SUCCESS);
+        }
+        // status = evaluate(table, line);
+        scan_line(line);
     } while (status); 
 }
 
 int main (int argc, char **argv) {
-    signal(SIGINT, SIG_IGN);
+    signal(SIGINT, SIG_IGN); // ignore sigint and sigtstp
     signal(SIGTSTP, SIG_IGN);
     using_history();
     if (read_history("history.txt")) {

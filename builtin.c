@@ -1,9 +1,7 @@
 # include "builtin.h"
 # include "execute.h"
 
-/*
-  Function declarations for builtin shell commnads:
-*/
+// Function declarations for builtin shell commnads:
 
 // list of pointers to all builtin commands
 char *all_builtin[] = {

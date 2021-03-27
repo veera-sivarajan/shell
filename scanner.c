@@ -27,40 +27,51 @@ typedef enum Redirect_Tokens {
 
 void scan_line (char *input) {
     int input_length = strlen(input);
-    int current_pos = 0;
-    while (current_pos < strlen(input)) {
-        if (is_lower_alpha(input[current_pos])) {
-            printf("Lower alphabet: %c\n", input[current_pos]);
+    int curr_pos = 0;
+    
+    while (curr_pos < input_length) {
+        char curr_char = input[curr_pos];
+        if (is_lower_alpha(curr_char)) {
             char *command = (char *) calloc(20 , CMD_SIZE);
-            while (input[current_pos] != ' ' && current_pos < strlen(input)) {
-                strncat(command, &input[current_pos], 1);
-                current_pos += 1;
-                // if (current_pos > input_length) return;
+            while (curr_char != ' ' && curr_pos < input_length) {
+                strncat(command, &curr_char, 1);
+                curr_pos += 1;
+                curr_char = input[curr_pos];
             }
             printf("First Command: %s\n", command);
             free(command);
         }
+        else if (curr_char == '-') {
+            char *args = (char *) calloc(20, CMD_SIZE);
+            while (curr_char != ' ' && curr_pos < input_length) {
+                strncat(args, &curr_char, 1);
+                curr_pos += 1;
+                curr_char = input[curr_pos];
+            }
+            printf("Args: %s\n", args);
+            free(args);
+        }
         else {
-            switch (input[current_pos]) {
+            switch (curr_char) {
             case ' ':
-                printf("Space Character: \n");
-                current_pos += 1;
+                printf("Space Character\n");
+                curr_pos += 1;
                 break;
             case '|':
-                printf("Pipe Character: %c\n", input[current_pos]);
-                current_pos += 1;
+                printf("Pipe Character: %c\n", curr_char);
+                curr_pos += 1;
                 break;
             case '>':
-                if (input[++current_pos] == '>') {
+                if (input[++curr_pos] == '>') {
                     printf("Great Great Character\n"); 
-                    current_pos += 1;
+                    curr_pos += 1;
                     break;
                 }
                 else {
-                    printf("Great Character: %c\n", input[current_pos]);
+                    printf("Great Character: %c\n", curr_char);
                     break;
                 }
-                current_pos += 1;
+                curr_pos += 1;
             }
         }
     }
