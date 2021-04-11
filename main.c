@@ -12,25 +12,27 @@
 # define NUM_ELE 100 
 # define SIZE 1024
 
-// int parse (elem **table, char *input) {
-//     if (input == NULL) { // exit on C-d (EOF Character)
-//         exit(EXIT_SUCCESS);
-//     }
-//     if (input[0] != '\0') { // don't evaluate string when user press enter
-//         add_history(input);
-//         command *cmd_table = (command *) calloc(1000, sizeof(command));
-//         cmd_table->command = (char **) malloc(100 * sizeof(char *));
-//         split_pipe(input, cmd_table);
-//         for (int i = 0; i <= cmd_table->num_cmds; ++i) {
-//             // printf("%s\n", cmd_table->command[i]);
-//             evaluate(table, cmd_table->command[i]);
-//             free(cmd_table->command[i]);
-//         }
-//         free(cmd_table->command);
-//         free(cmd_table);
-//         free(input);
-//     }
-// }
+/*
+int parse (elem **table, char *input) {
+    if (input == NULL) { // exit on C-d (EOF Character)
+        exit(EXIT_SUCCESS);
+    }
+    if (input[0] != '\0') { // don't evaluate string when user press enter
+        add_history(input);
+        command *cmd_table = (command *) calloc(1000, sizeof(command));
+        cmd_table->command = (char **) malloc(100 * sizeof(char *));
+        split_pipe(input, cmd_table);
+        for (int i = 0; i <= cmd_table->num_cmds; ++i) {
+            // printf("%s\n", cmd_table->command[i]);
+            evaluate(table, cmd_table->command[i]);
+            free(cmd_table->command[i]);
+        }
+        free(cmd_table->command);
+        free(cmd_table);
+        free(input);
+    }
+}
+*/
 
 // input string are not null terminated
 int evaluate (elem **table, char *input) {
