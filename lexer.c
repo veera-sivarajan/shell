@@ -1,4 +1,4 @@
-# include "scanner.h"
+# include "lexer.h"
 # include <stdlib.h>
 
 # define NUM_COMMANDS 5
@@ -8,8 +8,7 @@
 
 typedef struct Command_Table {
     int num_args;
-    int num_cmds;
-    char **cmds;
+    char **args;
 } Command_Table ;
 
 int is_lower_alpha (char input_char) {
@@ -24,28 +23,29 @@ void scan_line (char *input) {
     int cmd_index = 0;
     int arg_num = 0;
     table[cmd_index] = (Command_Table *) malloc(100);
-    table[cmd_index]->cmds = (char **) malloc(100);
+    table[cmd_index]->args = (char **) malloc(100);
     
     while (curr_pos <= input_length) {
         char curr_char = input[curr_pos];
         if (curr_char == '\0') {
+            printf("Arg num: %i\n", arg_num);
+            arg_num = 0;
             cmd_index += 1;
             table[cmd_index] = (Command_Table *) malloc(100);
-            table[cmd_index]->cmds = (char **) malloc(100);
+            table[cmd_index]->args = (char **) malloc(100);
             break;
-        }
-        else if (is_lower_alpha(curr_char)) {
+        } else if (is_lower_alpha(curr_char)) {
             char *command = (char *) calloc(20 , CMD_SIZE);
             while (curr_char != ' ' && curr_pos < input_length) {
                 strncat(command, &curr_char, 1);
                 curr_pos += 1;
                 curr_char = input[curr_pos];
             }
-            table[cmd_index]->cmds[arg_num] = (char *) malloc(100);
-            strcpy(table[cmd_index]->cmds[arg_num], command);
+            // table[cmd_index]->cmds[arg_num] = (char *) malloc(100);
+            // strcpy(table[cmd_index]->cmds[arg_num], command);
             arg_num += 1; 
             // printf("Command #: %i\n", cmd_index);
-            // printf("Command: %s\n", command);
+            printf("Command: %s\n", command);
             free(command);
         } else if (curr_char == '-') {
             char *args = (char *) calloc(20, CMD_SIZE);
@@ -64,10 +64,12 @@ void scan_line (char *input) {
                 curr_pos += 1;
                 break;
             case '|':
-                printf("Pipe Character: %c\n", curr_char);
+                // printf("Pipe Character: %c\n", curr_char);
+                printf("Arg num: %i\n", arg_num);
                 cmd_index += 1;
+                arg_num = 0;
                 table[cmd_index] = (Command_Table *) malloc(100);
-                table[cmd_index]->cmds = (char **) malloc(100);
+                table[cmd_index]->args = (char **) malloc(100);
                 curr_pos += 1;
                 break;
             case '>':
@@ -75,19 +77,22 @@ void scan_line (char *input) {
                     printf("Great Great Character\n"); 
                     curr_pos += 1;
                     break;
-                }
-                else {
+                } else {
                     printf("Great Character: %c\n", curr_char);
                     break;
                 }
                 curr_pos += 1;
                 break;
+            default:
+                printf("Unknown character\n");
+                exit(EXIT_FAILURE);
             }
         }
     }
-    printf("Arg num: %i\n", arg_num);
+    // printf("Arg num: %i\n", arg_num);
+    // table[cmd_index]->num_args = arg_num;
     for (int i = 0; i <= cmd_index; ++i) {
-        free(table[i]->cmds);
+        free(table[i]->args);
         free(table[i]);
     }
     free(input);

@@ -1,7 +1,7 @@
 # include "parse.h"
 # include "execute.h"
 # include "builtin.h"
-# include "scanner.h"
+# include "lexer.h"
 # include <string.h>
           
 # include <readline/readline.h>
@@ -9,30 +9,9 @@
 
 # define RESET "\x1B[0m"
 # define BLUE "\e[1;34m"
+# define RED "\x1b[31m"
 # define NUM_ELE 100 
 # define SIZE 1024
-
-/*
-int parse (elem **table, char *input) {
-    if (input == NULL) { // exit on C-d (EOF Character)
-        exit(EXIT_SUCCESS);
-    }
-    if (input[0] != '\0') { // don't evaluate string when user press enter
-        add_history(input);
-        command *cmd_table = (command *) calloc(1000, sizeof(command));
-        cmd_table->command = (char **) malloc(100 * sizeof(char *));
-        split_pipe(input, cmd_table);
-        for (int i = 0; i <= cmd_table->num_cmds; ++i) {
-            // printf("%s\n", cmd_table->command[i]);
-            evaluate(table, cmd_table->command[i]);
-            free(cmd_table->command[i]);
-        }
-        free(cmd_table->command);
-        free(cmd_table);
-        free(input);
-    }
-}
-*/
 
 // input string are not null terminated
 int evaluate (elem **table, char *input) {
@@ -65,9 +44,9 @@ void input_loop (elem **table) {
     int status = 1;
                     
     do {
+        getcwd(cwd, sizeof(cwd));
         strcpy(cmd, BLUE);
         strcpy(reset, RESET);  // colorize current working directory path 
-        getcwd(cwd, sizeof(cwd));
         strcat(cmd, cwd);
         strcat(cmd, reset);
         strcat(cmd, "$$ "); // append "$$" to colorized path 
@@ -75,6 +54,7 @@ void input_loop (elem **table) {
         if (strcmp(line, "exit") == 0) {
             exit(EXIT_SUCCESS);
         }
+        // add_history(line);
         // status = evaluate(table, line);
         scan_line(line);
     } while (status); 
@@ -105,7 +85,7 @@ int main (int argc, char **argv) {
     if (append_history(1000, "history.txt")) {
         fprintf(stderr, "write history error\n");
     }
-    clear_history();
+    rl_clear_history();
     free_table(table);
     free(table);
     return EXIT_SUCCESS;

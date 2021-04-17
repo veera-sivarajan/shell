@@ -30,6 +30,11 @@ int start_process (char **args) {
         // Child process
         signal(SIGINT, SIG_DFL);
         // char *filename = args[0]; // a.k.a program name
+        // printf("Command: %s\n", result.we_wordv[0]);
+        // for (int i = 0; result.we_wordv[i] != NULL; ++i) {
+        //     printf("Arg: %s\n", result.we_wordv[i]);
+        // }
+            
         if (execvp(result.we_wordv[0], result.we_wordv) == -1) {
             perror("start_process execvp error");
         }
@@ -41,6 +46,14 @@ int start_process (char **args) {
     }
     else {
         // Parent Process
+        // char **temp = (char **) calloc(10, 1000);
+        // temp[0] = (char *) calloc(10, 1000);
+        // strcpy(temp[0], "command_not_found_handle");
+        // strcpy(temp[1], "neofetch");
+        // execvp("command_not_found_handle", temp);
+        // free(temp[0]);
+        // free(temp[1]);
+        // free(temp);
         do {
             wpid = waitpid(pid, &status, WUNTRACED);
             if (wpid == -1) {
