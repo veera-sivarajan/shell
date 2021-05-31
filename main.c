@@ -78,6 +78,11 @@ void input_loop (elem **table) {
             free(input_line);
             break;
         }
+        if (strlen(input_line) == 0) {
+            free(input_line);
+            status = 1;
+            continue;
+        }
         // add_history(line);
         // status = evaluate(table, line);
         // scan_line(line);
@@ -109,6 +114,7 @@ int main (int argc, char **argv) {
     if (!table) {
         fprintf(stderr, "hashtable: malloc error\n");
         exit(EXIT_FAILURE);
+
     }
     // insert all alias
     insert_alias(table, "cl", "cd /home/veera/Classes/Fall20");
