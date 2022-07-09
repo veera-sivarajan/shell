@@ -99,7 +99,8 @@ void input_loop (elem **table) {
     free(cmd_table);
 }
 
-int main (int argc, char **argv) {
+// int main (int argc, char **argv) {
+void main(int argc, char **argv) {
     signal(SIGINT, SIG_IGN); // ignore sigint and sigtstp
     signal(SIGTSTP, SIG_IGN);
     using_history();
@@ -132,5 +133,5 @@ int main (int argc, char **argv) {
     
     free_table(table);
     free(table);
-    return EXIT_SUCCESS;
+    // return EXIT_SUCCESS;
 }

@@ -1,0 +1,12 @@
+index 65cda65..fede4e9 100644
+--- a/shell.zig
++++ b/shell.zig
+@@ -2250,7 +2250,7 @@ pub export fn input_loop(arg_table: [*c][*c]elem) void {
+     var reset: [1024]u8 = undefined;
+     var status: c_int = 0;
+     var cmd_table: [*c]command = @ptrCast([*c]command, @alignCast(@import("std").meta.alignment(command), calloc(@bitCast(c_ulong, @as(c_long, @as(c_int, 1000))), @sizeOf(command))));
+-    cmd_table.*.command = @ptrCast([*c][*c]u8, @alignCast(@import("std").meta.alignment([*c]u8), malloc(@bitCast(c_ulong, @as(c_long, @as(c_int, 100))) *% @sizeOf([*c]u8))));
++    cmd_table.*.command = @ptrCast([*c][*c]u8, @alignCast(@import("std").meta.alignment([*c][*c]u8), malloc(@bitCast(c_ulong, @as(c_long, @as(c_int, 100))) *% @sizeOf([*c]u8))));
+     while (true) {
+         _ = getcwd(@ptrCast([*c]u8, @alignCast(@import("std").meta.alignment(u8), &cwd)), @sizeOf([1024]u8));
+         _ = strcpy(@ptrCast([*c]u8, @alignCast(@import("std").meta.alignment(u8), &cmd)), "\x1b[1;34m");
