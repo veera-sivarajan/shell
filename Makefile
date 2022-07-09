@@ -1,4 +1,5 @@
-CC = gcc
+# CC = gcc
+CC = zig cc
 CFLAGS = -g -Wall 
 OBJECTS = $(filter-out test.c, $(wildcard *.c)) #Source files
 NAME = myshell #Desired filename
