@@ -1,7 +1,7 @@
 # CC = gcc
 CC = zig cc
 CFLAGS = -g -Wall 
-OBJECTS = $(filter-out test.c, $(wildcard *.c)) #Source files
+OBJECTS = $(filter-out test.c, $(wildcard ./c/*.c)) #Source files
 NAME = myshell #Desired filename
 TODELETE = *.o # the *.o should be the same as the objects
 LIBS = -lreadline
