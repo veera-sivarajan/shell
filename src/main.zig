@@ -2289,7 +2289,11 @@ pub export fn input_loop(arg_table: [*c][*c]elem) void {
     free(@ptrCast(?*anyopaque, cmd_table.*.command));
     free(@ptrCast(?*anyopaque, cmd_table));
 }
-pub export fn main() void {
+pub export fn main(arg_argc: c_int, arg_argv: [*c][*c]u8) void {
+    var argc = arg_argc;
+    _ = argc;
+    var argv = arg_argv;
+    _ = argv;
     _ = signal(@as(c_int, 2), @intToPtr(__sighandler_t, @as(c_int, 1)));
     _ = signal(@as(c_int, 20), @intToPtr(__sighandler_t, @as(c_int, 1)));
     using_history();
