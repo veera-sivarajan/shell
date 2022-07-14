@@ -1,0 +1,25 @@
+From 538d25cb8639d7dde9997d6b9b57cf73400e6667 Mon Sep 17 00:00:00 2001
+From: Veera <sveera.2001@gmail.com>
+Date: Thu, 14 Jul 2022 13:59:07 -0400
+Subject: [PATCH] Fix double pointers in translated zig file
+
+---
+ src/main.zig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/main.zig b/src/main.zig
+index 4a1565c..eff1675 100644
+--- a/src/main.zig
++++ b/src/main.zig
+@@ -2250,7 +2250,7 @@ pub export fn input_loop(arg_table: [*c][*c]elem) void {
+     var reset: [1024]u8 = undefined;
+     var status: c_int = 0;
+     var cmd_table: [*c]command = @ptrCast([*c]command, @alignCast(@import("std").meta.alignment(command), calloc(@bitCast(c_ulong, @as(c_long, @as(c_int, 1000))), @sizeOf(command))));
+-    cmd_table.*.command = @ptrCast([*c][*c]u8, @alignCast(@import("std").meta.alignment([*c]u8), malloc(@bitCast(c_ulong, @as(c_long, @as(c_int, 100))) *% @sizeOf([*c]u8))));
++    cmd_table.*.command = @ptrCast([*c][*c]u8, @alignCast(@import("std").meta.alignment([*c][*c]u8), malloc(@bitCast(c_ulong, @as(c_long, @as(c_int, 100))) *% @sizeOf([*c]u8))));
+     while (true) {
+         _ = getcwd(@ptrCast([*c]u8, @alignCast(@import("std").meta.alignment(u8), &cwd)), @sizeOf([1024]u8));
+         _ = strcpy(@ptrCast([*c]u8, @alignCast(@import("std").meta.alignment(u8), &cmd)), "\x1b[1;34m");
+-- 
+2.25.1
+
